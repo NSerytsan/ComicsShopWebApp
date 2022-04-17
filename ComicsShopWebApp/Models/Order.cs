@@ -1,4 +1,5 @@
-﻿namespace ComicsShopWebApp.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+namespace ComicsShopWebApp.Models
 {
     public partial class Order
     {
@@ -9,6 +10,7 @@
         public string DeliveryAdress { get; set; } = null!;
         public int OrderStatus { get; set; }
         public int PaymentStatus { get; set; }
+        [Column(TypeName = "money")]
         public decimal Cost { get; set; }
 
         public virtual Client Client { get; set; } = null!;
