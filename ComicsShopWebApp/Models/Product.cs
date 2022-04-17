@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ComicsShopWebApplication.Models
+namespace ComicsShopWebApp.Models
 {
     public partial class Product
     {

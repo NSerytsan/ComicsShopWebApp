@@ -1,4 +1,4 @@
-﻿namespace ComicsShopWebApplication.Models
+﻿namespace ComicsShopWebApp.Models
 {
     public partial class Order
     {
