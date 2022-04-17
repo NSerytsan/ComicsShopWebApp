@@ -18,7 +18,7 @@
 
         public virtual ICollection<ClientSupport> ClientSupports { get; set; }
         public virtual ICollection<Order> Orders { get; set; }
-
+        public string WebAppUserId { get; set; } = null!;
         public virtual WebAppUser WebAppUser { get; set; } = null!;
     }
 }
