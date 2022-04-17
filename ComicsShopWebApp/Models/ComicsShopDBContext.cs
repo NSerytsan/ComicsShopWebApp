@@ -19,9 +19,6 @@ namespace ComicsShopWebApp.Models
         public virtual DbSet<ProductList> ProductLists { get; set; } = null!;
         public virtual DbSet<Status> Statuses { get; set; } = null!;
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-        }
     }
 
 
