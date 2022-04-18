@@ -19,5 +19,9 @@ namespace ComicsShopWebApp.ViewModels
         [Display(Name = "Підтвердження паролю")]
         [Compare("Password", ErrorMessage = "Паролі не співпадають.")]
         public string ConfirmPassword { get; set; } = null!;
+
+        [Required]
+        [Display(Name = "Ім'я")]
+        public string FullName { get; set; } = null!;
     }
 }
