@@ -7,7 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ComicsShopDBContext>(option => option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-builder.Services.AddIdentity<WebAppUser, IdentityRole>().AddEntityFrameworkStores<ComicsShopDBContext>();
+builder.Services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<ComicsShopDBContext>();
 
 var app = builder.Build();
 

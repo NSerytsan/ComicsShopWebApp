@@ -1,6 +1,9 @@
-﻿namespace ComicsShopWebApp.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace ComicsShopWebApp.Models
 {
-    public partial class ProductList
+    [Table("ProductList")]
+    public class ProductList
     {
         public ProductList()
         {

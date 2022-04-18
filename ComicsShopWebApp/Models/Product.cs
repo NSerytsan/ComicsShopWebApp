@@ -4,7 +4,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ComicsShopWebApp.Models
 {
-    public partial class Product
+    [Table("Product")]
+    public class Product
     {
         public Product()
         {

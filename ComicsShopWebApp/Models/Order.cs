@@ -1,10 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 namespace ComicsShopWebApp.Models
 {
-    public partial class Order
+    [Table("Order")]
+    public class Order
     {
         public int Id { get; set; }
-        public int ClientId { get; set; }
+        public string UserId { get; set; }
         public int ProductListId { get; set; }
         public DateTime OrderDate { get; set; }
         public string DeliveryAdress { get; set; } = null!;
@@ -13,7 +14,7 @@ namespace ComicsShopWebApp.Models
         [Column(TypeName = "money")]
         public decimal Cost { get; set; }
 
-        public virtual Client Client { get; set; } = null!;
+        public virtual User User { get; set; } = null!;
         public virtual ProductList ProductList { get; set; } = null!;
     }
 }

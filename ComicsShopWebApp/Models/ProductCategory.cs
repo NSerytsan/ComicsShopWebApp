@@ -1,6 +1,9 @@
-﻿namespace ComicsShopWebApp.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace ComicsShopWebApp.Models
 {
-    public partial class ProductCategory
+    [Table("ProductCategory")]
+    public class ProductCategory
     {
         public int Id { get; set; }
         public int CategoryId { get; set; }

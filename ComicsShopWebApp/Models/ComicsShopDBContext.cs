@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ComicsShopWebApp.Models
 {
-    public class ComicsShopDBContext : IdentityDbContext<WebAppUser>
+    public class ComicsShopDBContext : IdentityDbContext<User>
     {
         public ComicsShopDBContext(DbContextOptions<ComicsShopDBContext> options)
             : base(options)
@@ -11,22 +11,15 @@ namespace ComicsShopWebApp.Models
             Database.EnsureCreated();
         }
         public virtual DbSet<Category> Categories { get; set; } = null!;
-        public virtual DbSet<Client> Clients { get; set; } = null!;
-        public virtual DbSet<ClientSupport> ClientSupports { get; set; } = null!;
+        public virtual DbSet<User> AppUsers { get; set; } = null!;
+        public virtual DbSet<UserSupport> UserSupports { get; set; } = null!;
         public virtual DbSet<Order> Orders { get; set; } = null!;
         public virtual DbSet<Product> Products { get; set; } = null!;
         public virtual DbSet<ProductCategory> ProductCategories { get; set; } = null!;
         public virtual DbSet<ProductList> ProductLists { get; set; } = null!;
         public virtual DbSet<Status> Statuses { get; set; } = null!;
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<Client>()
-                .HasOne(w => w.WebAppUser)
-                .WithOne(c => c.Client)
-                .HasForeignKey<Client>(w => w.WebAppUserId);
-        }
+        
     }
 
 
