@@ -2,7 +2,7 @@
 
 namespace ComicsShopWebApp.Models
 {
-    public class User: IdentityUser
+    public class User : IdentityUser
     {
         public User()
         {

@@ -19,8 +19,20 @@ namespace ComicsShopWebApp.Models
         public virtual DbSet<ProductList> ProductLists { get; set; } = null!;
         public virtual DbSet<Status> Statuses { get; set; } = null!;
 
-        
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Order>()
+                .HasOne(o => o.User)
+                .WithMany(u => u.Orders)
+                .HasForeignKey(o => o.UserId);
+
+            modelBuilder.Entity<UserSupport>()
+                .HasOne(s => s.User)
+                .WithMany(u => u.UserSupports)
+                .HasForeignKey(s => s.UserId);
+        }
+
     }
-
-
 }
