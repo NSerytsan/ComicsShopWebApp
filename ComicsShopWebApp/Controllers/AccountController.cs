@@ -16,6 +16,11 @@ namespace ComicsShopWebApp.Controllers
             _signInManager = signInManager;
         }
 
+        public IActionResult Login()
+        {
+            return View();
+        }
+
         [HttpGet]
         public IActionResult Register()
         {
