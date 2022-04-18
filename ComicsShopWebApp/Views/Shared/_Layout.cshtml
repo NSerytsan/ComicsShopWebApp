@@ -51,6 +51,7 @@
               <div class="dropdown-menu dropdown-menu-end">
                 <a class="dropdown-item" href="#">Мої замовлення</a>
                 <a class="dropdown-item" href="#">Особиста інформація</a>
+                <a class="dropdown-item" asp-action="logout" asp-controller="account">Вийти з обліково запису</a>
               </div>
             </li>
             <li class="nav-item dropdown">
@@ -65,7 +66,10 @@
           else
           {
             <li class="nav-item">
-              <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Авторизація</a>
+              <a class="nav-link" asp-area="" asp-controller="Account" asp-action="Register">Регістрація</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" asp-area="" asp-controller="Account" asp-action="Login">Логін</a>
             </li>
           }
         </ul>
