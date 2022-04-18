@@ -16,6 +16,7 @@ namespace ComicsShopWebApp.Controllers
             _signInManager = signInManager;
         }
 
+        [HttpGet]
         public IActionResult Login()
         {
             return View();
@@ -24,8 +25,25 @@ namespace ComicsShopWebApp.Controllers
         [HttpGet]
         public IActionResult Register()
         {
-            
+
             return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Login(LoginViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
+
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+
+                ModelState.AddModelError(string.Empty, "Invalid Login Attempt");
+            }
+            return View(model);
         }
 
         [HttpPost]
@@ -33,7 +51,7 @@ namespace ComicsShopWebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new User { Email = model.Email, UserName = model.Email, FullName = model.FullName};
+                var user = new User { Email = model.Email, UserName = model.Email, FullName = model.FullName };
 
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
