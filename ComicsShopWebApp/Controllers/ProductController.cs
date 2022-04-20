@@ -34,9 +34,63 @@ namespace ComicsShopWebApp.Controllers
             }
             return View(obj);
         }
-        //public IActionResult Index()
-        //{
-        //    return View();
-        //}
+
+        public IActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var ProductFromDb = _db.Products.Find(id);
+
+            if (ProductFromDb == null)
+            {
+                return NotFound();
+            }
+            return View(ProductFromDb);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(Product obj)
+        {
+            if (ModelState.IsValid)
+            {
+                _db.Products.Update(obj);
+                _db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(obj);
+        }
+
+        public IActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var ProductFromDb = _db.Products.Find(id);
+
+            if (ProductFromDb == null)
+            {
+                return NotFound();
+            }
+            return View(ProductFromDb);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeletePost(int? id)
+        {
+            var obj = _db.Products.Find(id);
+            if (obj == null)
+            {
+                return NotFound();
+            }
+
+            _db.Products.Remove(obj);
+            _db.SaveChanges();
+            return RedirectToAction("Index");
+        }
     }
 }
