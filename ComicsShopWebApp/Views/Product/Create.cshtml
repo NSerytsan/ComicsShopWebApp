@@ -1,0 +1,34 @@
+﻿@model Product
+
+<form method="post">
+	<div class="border p-3 mt-4">
+		<div class="row pb-2">
+			<h2 class="text-primary">Створити новий продукт</h2>
+			<hr />
+		</div>
+		<div class="mb-3">
+			<label asp-for="ProductName"></label>
+			<input asp-for="ProductName" class="form-control"/>
+			<span asp-validation-for="ProductName" class="text-danger"></span>
+		</div>
+			<div class="mb-3">
+			<label asp-for="Category"></label>
+			<input asp-for="Category" class="form-control"/>
+			<span asp-validation-for="Category" class="text-danger"></span>
+		</div>
+		<div class="mb-3">
+			<label asp-for="Cost"></label>
+			<input asp-for="Cost" class="form-control"/>
+			<span asp-validation-for="Cost" class="text-danger"></span>
+		</div>
+		<div class="mb-3">
+			<label asp-for="NumLeft"></label>
+			<input asp-for="NumLeft" class="form-control"/>
+			<span asp-validation-for="NumLeft" class="text-danger"></span>
+		</div>
+		<button type="submit" class="btn btn-primary" style="width:120px">Створити</button>
+		<a asp-controller="Home" asp-action="Index" class="btn btn-secondary" style="width:120px">
+			Скасувати
+		</a>
+	</div>
+</form>

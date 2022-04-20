@@ -79,17 +79,19 @@ namespace ComicsShopWebApp.Controllers
             return View(CategoryFromDb);
         }
 
-        [HttpPost]
+        [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public IActionResult Delete(Category obj)
+        public IActionResult DeletePost(int? id)
         {
-            if (ModelState.IsValid)
+            var obj = _db.Categories.Find(id);
+            if (obj == null)
             {
-                _db.Categories.Remove(obj);
-                _db.SaveChanges();
-                return RedirectToAction("Index");
+                return NotFound();
             }
-            return View(obj);
+
+            _db.Categories.Remove(obj);
+            _db.SaveChanges();
+            return RedirectToAction("Index");
         }
     }
 }

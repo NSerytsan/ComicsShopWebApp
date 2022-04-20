@@ -3,13 +3,12 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Category Index</h1>
 <div class="container p-3">
     <div calss="row p-4">
         <div class="col-6">
             <h2 class="text-primary">Категорії</h2>
         </div>
-        <div class="col-6 text-end">
+        <div class="text-end">
             <a asp-controller="Category" asp-action="Create" class="btn btn-primary">
                 Створити нову категорію
             </a>
@@ -42,6 +41,10 @@
                 <td>
                     <div class="w-75 btn-group" role="group">
                         <a asp-controller="Category" asp-action="Edit" asp-route-id="@obj.Id" class="btn btn-primary">Реадагувати</a>
+                    </div>
+                    <td>
+                    <div class="w-75 btn-group" role="group">
+                        <a asp-controller="Category" asp-action="Delete" asp-route-id="@obj.Id" class="btn btn-primary">Видалити</a>
                     </div>
                 </td>
             </tr>
