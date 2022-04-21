@@ -18,9 +18,12 @@ namespace ComicsShopWebApp.Controllers
         }
 
         [Authorize]
-        public IActionResult Index()
+        public async Task<IActionResult> IndexAsync(UserSupportViewModel model)
         {
-            return View();
+            var user = await _userManager.GetUserAsync(this.User);
+
+            IEnumerable<UserSupport> MesssagesList = _db.UserSupports.Where(b=>b.UserId == user.Id);
+            return View(MesssagesList);
         }
 
         [HttpGet]
