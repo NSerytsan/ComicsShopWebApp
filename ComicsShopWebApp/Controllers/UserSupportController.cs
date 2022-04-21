@@ -1,7 +1,8 @@
 ﻿using ComicsShopWebApp.Models;
+using ComicsShopWebApp.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 
 namespace ComicsShopWebApp.Controllers
 {
@@ -20,21 +21,29 @@ namespace ComicsShopWebApp.Controllers
             return View();
         }
 
-        public IActionResult Create() 
+        [HttpGet]
+        [Authorize]
+        public IActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(UserSupport model)
+        [Authorize]
+        public async Task<IActionResult> Create(UserSupportViewModel model)
         {
-            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            model.UserId = userId;
-            model.User = await _userManager.GetUserAsync(this.User);
             if (ModelState.IsValid)
             {
-                _db.UserSupports.Add(model);
+                var user = await _userManager.GetUserAsync(this.User);
+                var userSupport = new UserSupport
+                {
+                    UserId = user.Id,
+                    User = user,
+                    TextMessage = model.TextMessage
+                };
+
+                _db.UserSupports.Add(userSupport);
                 _db.SaveChanges();
                 return RedirectToAction("Index", "Home");
             }
