@@ -19,9 +19,8 @@ namespace ComicsShopWebApp.Models
         [Display(Name = "Назва продукту")]
         public string ProductName { get; set; } = null!;
 
-        [Required(ErrorMessage = "Поле не повинно бути порожнім")]
         [Display(Name = "Категорія")]
-        public string Category { get; set; } = null!;
+        public string? Category { get; set; } = null!;
 
         [Required(ErrorMessage = "Поле не повинно бути порожнім")]
         [Display(Name = "Ціна")]
