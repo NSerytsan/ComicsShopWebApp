@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
 namespace ComicsShopWebApp.Models
 {
@@ -7,6 +8,9 @@ namespace ComicsShopWebApp.Models
     {
         public int Id { get; set; }
         public string UserId { get; set; } = null!;
+
+        [Required(ErrorMessage = "Поле не повинно бути порожнім")]
+        [Display(Name ="Текст звернення")]
         public string? TextMessage { get; set; }
 
         public virtual User User { get; set; } = null!;

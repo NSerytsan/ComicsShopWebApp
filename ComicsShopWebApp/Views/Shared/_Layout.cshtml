@@ -59,7 +59,7 @@
               <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true"
               aria-expanded="false"><i class="bi bi-question-octagon"></i></a>
               <div class="dropdown-menu dropdown-menu-end">
-                <a class="dropdown-item" href="#">Створити нове звернення</a>
+                <a class="dropdown-item" asp-controller="UserSupport" asp-action="Create">Створити нове звернення</a>
                 <a class="dropdown-item" href="#">Мої зверення</a>
               </div>
             </li>
@@ -85,7 +85,7 @@
 
   <footer class="border-top footer text-muted">
     <div class="container">
-      &copy; 2022 - ComicsShopWebApp - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+      &copy; 2022 - ComicsShopWebApp
     </div>
   </footer>
   <script src="~/lib/jquery/dist/jquery.min.js"></script>
