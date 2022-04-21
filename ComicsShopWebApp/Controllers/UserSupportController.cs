@@ -16,6 +16,8 @@ namespace ComicsShopWebApp.Controllers
             _db = db;
             _userManager = userManager;
         }
+
+        [Authorize]
         public IActionResult Index()
         {
             return View();
