@@ -13,6 +13,7 @@ namespace ComicsShopWebApp.Models
         [Display(Name ="Текст звернення")]
         public string? TextMessage { get; set; }
         
+        [DataType(DataType.Date)]
         public DateTime Date { get; set; } = DateTime.Now;
 
         public virtual User User { get; set; } = null!;
