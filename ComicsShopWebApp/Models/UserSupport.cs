@@ -12,6 +12,8 @@ namespace ComicsShopWebApp.Models
         [Required(ErrorMessage = "Поле не повинно бути порожнім")]
         [Display(Name ="Текст звернення")]
         public string? TextMessage { get; set; }
+        
+        public DateTime Date { get; set; } = DateTime.Now;
 
         public virtual User User { get; set; } = null!;
     }
