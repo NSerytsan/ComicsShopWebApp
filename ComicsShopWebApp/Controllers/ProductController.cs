@@ -1,107 +1,109 @@
 ﻿using ComicsShopWebApp.Models;
-using Microsoft.AspNetCore.Mvc;
 using ComicsShopWebApp.ViewModels;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace ComicsShopWebApp.Controllers
 {
-    public class ProductController : Controller
-    {
-        private readonly ComicsShopDBContext _db;
+	public class ProductController : Controller
+	{
+		private readonly ComicsShopDBContext _db;
 
-        public ProductController(ComicsShopDBContext db)
-        {
-            _db = db;
-        }
-        public IActionResult Index()
-        {
-            IEnumerable<Product> ProductsList = _db.Products;
-            return View(ProductsList);
-        }
+		public ProductController(ComicsShopDBContext db)
+		{
+			_db = db;
+		}
+		public IActionResult Index()
+		{
+			IEnumerable<Product> ProductsList = _db.Products;
+			return View(ProductsList);
+		}
 
-        public IActionResult Create()
-        {
-            var model = new ProductViewModel();
-            foreach (var category in _db.Categories)
-            {
-                var catv = new CategoryViewModel();
-                catv.CategoryName = category.CategoryName;
-                catv.Id = category.Id;
-                catv.IsChecked = false;
-                model.Categories.Add(catv);
-            }
-            
-            return View(model);
-        }
+		[HttpGet]
+		public IActionResult Create()
+		{
+			var listItem = _db.Categories.Select(c => new SelectListItem()
+			{
+				Text = c.CategoryName,
+				Value = c.Id.ToString()
+			}).ToList();
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Create(Product obj)
-        {
-            if (ModelState.IsValid)
-            {
-                _db.Products.Add(obj);
-                _db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(obj);
-        }
+			var viewModel = new ProductViewModel()
+			{
+				Categories = listItem
+			};
 
-        public IActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-            var ProductFromDb = _db.Products.Find(id);
+			return View(viewModel);
+		}
 
-            if (ProductFromDb == null)
-            {
-                return NotFound();
-            }
-            return View(ProductFromDb);
-        }
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public IActionResult Create(ProductViewModel viewModel)
+		{
+			if (ModelState.IsValid)
+			{
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Edit(Product obj)
-        {
-            if (ModelState.IsValid)
-            {
-                _db.Products.Update(obj);
-                _db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(obj);
-        }
+				return RedirectToAction("Index");
+			}
+			return View(viewModel);
+		}
 
-        public IActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-            var ProductFromDb = _db.Products.Find(id);
+		public IActionResult Edit(int? id)
+		{
+			if (id == null)
+			{
+				return NotFound();
+			}
+			var ProductFromDb = _db.Products.Find(id);
 
-            if (ProductFromDb == null)
-            {
-                return NotFound();
-            }
-            return View(ProductFromDb);
-        }
+			if (ProductFromDb == null)
+			{
+				return NotFound();
+			}
+			return View(ProductFromDb);
+		}
 
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public IActionResult DeletePost(int? id)
-        {
-            var obj = _db.Products.Find(id);
-            if (obj == null)
-            {
-                return NotFound();
-            }
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public IActionResult Edit(Product obj)
+		{
+			if (ModelState.IsValid)
+			{
+				_db.Products.Update(obj);
+				_db.SaveChanges();
+				return RedirectToAction("Index");
+			}
+			return View(obj);
+		}
 
-            _db.Products.Remove(obj);
-            _db.SaveChanges();
-            return RedirectToAction("Index");
-        }
-    }
+		public IActionResult Delete(int? id)
+		{
+			if (id == null)
+			{
+				return NotFound();
+			}
+			var ProductFromDb = _db.Products.Find(id);
+
+			if (ProductFromDb == null)
+			{
+				return NotFound();
+			}
+			return View(ProductFromDb);
+		}
+
+		[HttpPost, ActionName("Delete")]
+		[ValidateAntiForgeryToken]
+		public IActionResult DeletePost(int? id)
+		{
+			var obj = _db.Products.Find(id);
+			if (obj == null)
+			{
+				return NotFound();
+			}
+
+			_db.Products.Remove(obj);
+			_db.SaveChanges();
+			return RedirectToAction("Index");
+		}
+	}
 }

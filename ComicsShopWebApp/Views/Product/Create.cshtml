@@ -21,14 +21,14 @@
 			<input asp-for="NumLeft" class="form-control"/>
 			<span asp-validation-for="NumLeft" class="text-danger"></span>
 		</div>
-		<div class="mb-3">
-			
-				@for(int i  =0; i < Model.Categories.Count(); i++)
+		<div class="mb-3 row justify-content-md-center">
+				@for(int i = 0; i < Model.Categories.Count(); i++)
 				{
-					<input type="checkbox" asp-for="@Model.Categories[i].IsChecked"> @Model.Categories[i].CategoryName
-					<br/>
+					<input type="hidden" asp-for="@Model.Categories[i].Value"/>
+					<div class="col-md-auto">
+						<input asp-for="Categories[i].Selected"/> @Model.Categories[i].Text
+					</div>
 				}
-			
 		</div>
 		<button type="submit" class="btn btn-primary" style="width:120px">Створити</button>
 		<a asp-controller="Product" asp-action="Index" class="btn btn-secondary" style="width:120px">
