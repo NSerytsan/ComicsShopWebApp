@@ -2,11 +2,11 @@
 
 namespace ComicsShopWebApp.Controllers
 {
-	public class ProductListController : Controller
-	{
-		public IActionResult Index()
-		{
-			return View();
-		}
-	}
+    public class ProductListController : Controller
+    {
+        public IActionResult Index()
+        {
+            return View();
+        }
+    }
 }

@@ -73,26 +73,65 @@ namespace ComicsShopWebApp.Controllers
             {
                 return NotFound();
             }
-            var ProductFromDb = _db.Products.Find(id);
+            var product = _db.Products.Find(id);
 
-            if (ProductFromDb == null)
+            if (product == null)
             {
                 return NotFound();
             }
-            return View(ProductFromDb);
+
+            var categoryIds = _db.ProductCategories.Where(p => p.ProductId == product.Id).Select(c => c.CategoryId).ToList();
+            var listItem = _db.Categories.Select(c => new SelectListItem()
+            {
+                Text = c.CategoryName,
+                Value = c.Id.ToString(),
+                Selected = categoryIds.Contains(c.Id)
+            }).ToList();
+
+
+            var viewModel = new ProductViewModel()
+            {
+                Id = product.Id,
+                ProductName = product.ProductName,
+                Cost = product.Cost,
+                NumLeft = product.NumLeft,
+                Categories = listItem
+            };
+
+            return View(viewModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(Product obj)
+        public IActionResult Edit(ProductViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
-                _db.Products.Update(obj);
+                var product = _db.Products.Find(viewModel.Id);
+                product.NumLeft = viewModel.NumLeft;
+                product.ProductName = viewModel.ProductName;
+                product.Cost = viewModel.Cost;
+
+                var categoryIds = viewModel.Categories.Where(x => x.Selected).Select(y => y.Value);
+
+                _db.ProductCategories.RemoveRange(_db.ProductCategories.Where(pc => pc.ProductId == product.Id));
+
+                foreach (var catId in categoryIds)
+                {
+                    var productCat = new ProductCategory()
+                    {
+                        CategoryId = int.Parse(catId),
+                        ProductId = product.Id
+                    };
+                    product.ProductCategories.Add(productCat);
+                }
+
+                _db.Products.Update(product);
+
                 _db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(obj);
+            return View(viewModel);
         }
 
         public IActionResult Delete(int? id)
