@@ -18,7 +18,7 @@ namespace ComicsShopWebApp.Controllers
         }
 
         [Authorize]
-        public async Task<IActionResult> IndexAsync(UserSupportViewModel model)
+        public async Task<IActionResult> IndexAsync()
         {
             var user = await _userManager.GetUserAsync(this.User);
 
@@ -30,6 +30,7 @@ namespace ComicsShopWebApp.Controllers
         [Authorize]
         public IActionResult Create()
         {
+
             return View();
         }
 

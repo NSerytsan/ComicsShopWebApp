@@ -1,4 +1,4 @@
-﻿@model Product
+﻿@model ProductViewModel
 
 <form method="post">
 	<div class="border p-3 mt-4">
@@ -11,11 +11,6 @@
 			<input asp-for="ProductName" class="form-control"/>
 			<span asp-validation-for="ProductName" class="text-danger"></span>
 		</div>
-			@*<div class="mb-3">
-			<label asp-for="Category"></label>
-			<input asp-for="Category" class="form-control"/>
-			<span asp-validation-for="Category" class="text-danger"></span>
-		</div>*@
 		<div class="mb-3">
 			<label asp-for="Cost"></label>
 			<input asp-for="Cost" class="form-control"/>
@@ -25,6 +20,14 @@
 			<label asp-for="NumLeft"></label>
 			<input asp-for="NumLeft" class="form-control"/>
 			<span asp-validation-for="NumLeft" class="text-danger"></span>
+		</div>
+		<div class="mb-3">
+			<table>
+				@foreach(var category in Model.categories)
+				{
+					@Html.CheckBox("IsChecked", new {@class= "form-control"})
+				}
+			</table>
 		</div>
 		<button type="submit" class="btn btn-primary" style="width:120px">Створити</button>
 		<a asp-controller="Product" asp-action="Index" class="btn btn-secondary" style="width:120px">

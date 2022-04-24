@@ -1,5 +1,6 @@
 ﻿using ComicsShopWebApp.Models;
 using Microsoft.AspNetCore.Mvc;
+using ComicsShopWebApp.ViewModels;
 
 namespace ComicsShopWebApp.Controllers
 {
@@ -19,7 +20,10 @@ namespace ComicsShopWebApp.Controllers
 
         public IActionResult Create()
         {
-            return View();
+            var model = new ProductViewModel();
+            model.categories = _db.Categories.ToList();
+
+            return View(model);
         }
 
         [HttpPost]

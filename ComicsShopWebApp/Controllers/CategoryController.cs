@@ -93,5 +93,33 @@ namespace ComicsShopWebApp.Controllers
             _db.SaveChanges();
             return RedirectToAction("Index");
         }
+
+        //public IActionResult AddProduct(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    var CategoryFromDb = _db.Categories.Find(id);
+
+        //    if (CategoryFromDb == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    return View(CategoryFromDb);
+        //}
+
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public IActionResult AddProduct(Category obj)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        _db.Categories.Update(obj);
+        //        _db.SaveChanges();
+        //        return RedirectToAction("Index");
+        //    }
+        //    return View(obj);
+        //}
     }
 }
