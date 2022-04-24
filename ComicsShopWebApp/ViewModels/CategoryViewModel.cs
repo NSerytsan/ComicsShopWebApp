@@ -4,6 +4,6 @@
     {
         public int Id { get; set; }
         public string CategoryName { get; set; } = null!;
-         bool IsChecked { get; set; }
+        public bool IsChecked { get; set; }
     }
 }

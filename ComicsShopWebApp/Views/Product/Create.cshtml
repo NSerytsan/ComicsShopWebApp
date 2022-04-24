@@ -22,12 +22,13 @@
 			<span asp-validation-for="NumLeft" class="text-danger"></span>
 		</div>
 		<div class="mb-3">
-			<table>
-				@foreach(var category in Model.categories)
+			
+				@for(int i  =0; i < Model.Categories.Count(); i++)
 				{
-					@Html.CheckBox("IsChecked", new {@class= "form-control"})
+					<input type="checkbox" asp-for="@Model.Categories[i].IsChecked"> @Model.Categories[i].CategoryName
+					<br/>
 				}
-			</table>
+			
 		</div>
 		<button type="submit" class="btn btn-primary" style="width:120px">Створити</button>
 		<a asp-controller="Product" asp-action="Index" class="btn btn-secondary" style="width:120px">

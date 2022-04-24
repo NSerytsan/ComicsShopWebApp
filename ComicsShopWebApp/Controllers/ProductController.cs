@@ -21,8 +21,15 @@ namespace ComicsShopWebApp.Controllers
         public IActionResult Create()
         {
             var model = new ProductViewModel();
-            model.categories = _db.Categories.ToList();
-
+            foreach (var category in _db.Categories)
+            {
+                var catv = new CategoryViewModel();
+                catv.CategoryName = category.CategoryName;
+                catv.Id = category.Id;
+                catv.IsChecked = false;
+                model.Categories.Add(catv);
+            }
+            
             return View(model);
         }
 

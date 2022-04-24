@@ -22,6 +22,6 @@ namespace ComicsShopWebApp.ViewModels
         [Display(Name = "Залишилося")]
         [Range(0, 1000000)]
         public int NumLeft { get; set; }
-        public IEnumerable<Category> categories { get; set; }
+        public List<CategoryViewModel> Categories { get; set; } = new List<CategoryViewModel>();
     }
 }
