@@ -1,5 +1,6 @@
 ﻿using ComicsShopWebApp.Models;
 using ComicsShopWebApp.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -19,6 +20,7 @@ namespace ComicsShopWebApp.Controllers
             return View(ProductsList);
         }
 
+        [Authorize]
         [HttpGet]
         public IActionResult Create()
         {
@@ -36,6 +38,7 @@ namespace ComicsShopWebApp.Controllers
             return View(viewModel);
         }
 
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create(ProductViewModel viewModel)
@@ -67,6 +70,7 @@ namespace ComicsShopWebApp.Controllers
             return View(viewModel);
         }
 
+        [Authorize]
         public IActionResult Edit(int? id)
         {
             if (id == null)
@@ -101,6 +105,7 @@ namespace ComicsShopWebApp.Controllers
             return View(viewModel);
         }
 
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Edit(ProductViewModel viewModel)
@@ -134,6 +139,7 @@ namespace ComicsShopWebApp.Controllers
             return View(viewModel);
         }
 
+        [Authorize]
         public IActionResult Delete(int? id)
         {
             if (id == null)
@@ -149,6 +155,7 @@ namespace ComicsShopWebApp.Controllers
             return View(ProductFromDb);
         }
 
+        [Authorize]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public IActionResult DeletePost(int? id)

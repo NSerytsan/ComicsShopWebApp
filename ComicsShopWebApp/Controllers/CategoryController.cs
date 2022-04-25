@@ -1,4 +1,5 @@
 ﻿using ComicsShopWebApp.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ComicsShopWebApp.Controllers
@@ -18,11 +19,13 @@ namespace ComicsShopWebApp.Controllers
             return View(CategoryList);
         }
 
+        [Authorize]
         public IActionResult Create()
         {
             return View();
         }
 
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create(Category obj)
@@ -36,6 +39,7 @@ namespace ComicsShopWebApp.Controllers
             return View(obj);
         }
 
+        [Authorize]
         public IActionResult Edit(int? id)
         {
             if (id == null)
@@ -51,6 +55,7 @@ namespace ComicsShopWebApp.Controllers
             return View(CategoryFromDb);
         }
 
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Edit(Category obj)
@@ -64,6 +69,7 @@ namespace ComicsShopWebApp.Controllers
             return View(obj);
         }
 
+        [Authorize]
         public IActionResult Delete(int? id)
         {
             if (id == null)
@@ -79,6 +85,7 @@ namespace ComicsShopWebApp.Controllers
             return View(CategoryFromDb);
         }
 
+        [Authorize]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public IActionResult DeletePost(int? id)
@@ -93,33 +100,5 @@ namespace ComicsShopWebApp.Controllers
             _db.SaveChanges();
             return RedirectToAction("Index");
         }
-
-        //public IActionResult AddProduct(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    var CategoryFromDb = _db.Categories.Find(id);
-
-        //    if (CategoryFromDb == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    return View(CategoryFromDb);
-        //}
-
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public IActionResult AddProduct(Category obj)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        _db.Categories.Update(obj);
-        //        _db.SaveChanges();
-        //        return RedirectToAction("Index");
-        //    }
-        //    return View(obj);
-        //}
     }
 }
