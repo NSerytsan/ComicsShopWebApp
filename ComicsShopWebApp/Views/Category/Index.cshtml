@@ -1,4 +1,5 @@
-﻿@model IEnumerable<Category>
+﻿@inject SignInManager<User> signInManager;
+@model IEnumerable<Category>
 @{
     ViewData["Title"] = "Index";
 }
@@ -9,9 +10,12 @@
             <h2 class="text-primary">Категорії</h2>
         </div>
         <div class="text-end">
-            <a asp-controller="Category" asp-action="Create" class="btn btn-primary">
-                Створити нову категорію
-            </a>
+            @if (signInManager.IsSignedIn(User))
+            {
+                <a asp-controller="Category" asp-action="Create" class="btn btn-primary">
+                    Створити нову категорію
+                </a>
+            }
         </div>
     </div>
 </div> 
@@ -39,14 +43,20 @@
                     @obj.CategoryDescription
                 </td>
                 <td>
-                    <div class="w-75 btn-group" role="group">
-                        <a asp-controller="Category" asp-action="Edit" asp-route-id="@obj.Id" class="btn btn-primary">Реадагувати</a>
-                    </div>
+                    @if (signInManager.IsSignedIn(User))
+                    {
+                        <div class="w-75 btn-group" role="group">
+                            <a asp-controller="Category" asp-action="Edit" asp-route-id="@obj.Id" class="btn btn-primary">Реадагувати</a>
+                        </div>
+                    }
                 </td>
                 <td>
-                    <div class="w-75 btn-group" role="group">
-                        <a asp-controller="Category" asp-action="Delete" asp-route-id="@obj.Id" class="btn btn-primary">Видалити</a>
-                    </div>
+                     @if (signInManager.IsSignedIn(User))
+                    {
+                        <div class="w-75 btn-group" role="group">
+                            <a asp-controller="Category" asp-action="Delete" asp-route-id="@obj.Id" class="btn btn-primary">Видалити</a>
+                        </div>
+                    }
                 </td>
             </tr>
         }
