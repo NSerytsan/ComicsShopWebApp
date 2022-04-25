@@ -8,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ComicsShopDBContext>(option => option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<ComicsShopDBContext>();
+builder.Services.AddSession();
 
 var app = builder.Build();
 
@@ -20,6 +21,7 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseSession();
 app.UseStaticFiles();
 
 app.UseRouting();
