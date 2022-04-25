@@ -2,5 +2,70 @@
     ViewData["Title"] = "Кошик";
 }
 
-<h1>@ViewData["Title"]</h1>
+<div class="container p-3">
+    <div calss="row p-4">
+        <div class="col-6">
+            <h2 class="text-primary">@ViewData["Title"]</h2>
+        </div>
+        <div class="text-end">
+            <a asp-controller="Order" asp-action="Create" class="btn btn-primary">
+                Оформити замовлення
+            </a>
+        </div>
+    </div>
+</div>
+
+<table class="table table-borderless table-striped" style="width:100%">
+    <thead>
+        <tr>
+            <th>
+                Назва продукту
+            </th>
+            <th>
+                Кількість
+            </th>
+            <th>
+                Вартість
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var productItem in @ViewBag.cart)
+        {
+            <tr>
+                <td width="50%">
+                    @productItem.Product.ProductName
+                </td>
+                <td width="50%">
+                    @productItem.Quantity
+                </td>
+                <td width="50%">
+                    @(productItem.Product.Cost * productItem.Quantity)
+                </td>
+                @*<td>
+                    <div class="w-75 btn-group" role="group">
+                        <a asp-controller="Cart" asp-action="Buy" asp-route-id="@obj.Id" class="btn btn-primary"><i class="bi bi-cart3"></i></a>
+                    </div>
+                </td>
+                <td>
+                    <div class="w-75 btn-group" role="group">
+                        <a asp-controller="Product" asp-action="Edit" asp-route-id="@obj.Id" class="btn btn-primary">Реадагувати</a>
+                    </div>
+                </td>
+                    <td>
+                    <div class="w-75 btn-group" role="group">
+                        <a asp-controller="Product" asp-action="Delete" asp-route-id="@obj.Id" class="btn btn-primary">Видалити</a>
+                    </div>
+                </td>*@
+            </tr>
+        }
+        <tr>
+            <td align="right" colspan="6">Sum</td>
+            <td>
+                @ViewBag.total
+            </td>
+        </tr>
+    </tbody>
+</table>
 
