@@ -10,7 +10,6 @@ namespace ComicsShopWebApp.Models
         public Product()
         {
             ProductCategories = new HashSet<ProductCategory>();
-            ProductLists = new HashSet<ProductList>();
         }
 
         public int Id { get; set; }
@@ -34,6 +33,5 @@ namespace ComicsShopWebApp.Models
         public int NumLeft { get; set; }
 
         public virtual ICollection<ProductCategory> ProductCategories { get; set; }
-        public virtual ICollection<ProductList> ProductLists { get; set; }
     }
 }
