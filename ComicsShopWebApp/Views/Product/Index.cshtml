@@ -26,10 +26,10 @@
             <th>
                 Назва продукту
             </th>
-            <th>
+            <th class="text-center">
                 Вартість
             </th>
-            <th>
+            <th class="text-center">
                 Залишилося
             </th>
             <th></th>
@@ -42,12 +42,13 @@
                 <td width="50%">
                     @obj.ProductName
                 </td>
-                <td width="50%">
-                    @obj.Cost
+                <td class="text-center" width="25%">
+                    @obj.Cost.ToString("# ### ###.00")
                 </td>
-                <td width="50%">
+                <td class="text-center" width="25%">
                     @obj.NumLeft
                 </td>
+                <td width="5%"></td>
                 <td>
                     @if (signInManager.IsSignedIn(User))
                     {
@@ -64,7 +65,7 @@
                         </div>
                     }
                 </td>
-                    <td>
+                <td>
                     @if (signInManager.IsSignedIn(User))
                     {
                         <div class="w-75 btn-group" role="group">
