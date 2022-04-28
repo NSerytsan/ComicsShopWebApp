@@ -31,7 +31,7 @@ namespace ComicsShopWebApp.Controllers
         {
             var order = await CartOrderAysnc();
 
-            var productItem = order.ProductItems.Where(pi => pi.Id == id).FirstOrDefault();
+            var productItem = order.ProductItems.FirstOrDefault(pi => pi.Product.Id == id);
             if (productItem != null)
             {
                 productItem.Quantity++;
@@ -46,6 +46,19 @@ namespace ComicsShopWebApp.Controllers
             return RedirectToAction("Index", "Product");
         }
 
+        public async Task<IActionResult> Delete(int id)
+        {
+            var order = await CartOrderAysnc();
+
+            var productItem = order.ProductItems.Where(pi => pi.Product.Id == id).FirstOrDefault();
+            if (productItem != null)
+            {
+                order.ProductItems.Remove(productItem);
+                _db.SaveChanges();
+            }
+
+            return RedirectToAction("Index", "Cart");
+        }
         private async Task<Order> CartOrderAysnc()
         {
             var user = await _userManager.GetUserAsync(this.User);

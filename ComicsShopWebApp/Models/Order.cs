@@ -11,7 +11,7 @@ namespace ComicsShopWebApp.Models
         public int Id { get; set; }
         public string UserId { get; set; } = null!;
         public int StatusId { get; set; }
-        
+
         public DateTime OrderDate { get; set; } = DateTime.Now;
         public string DeliveryAdress { get; set; } = null!;
         public int PaymentStatus { get; set; }
