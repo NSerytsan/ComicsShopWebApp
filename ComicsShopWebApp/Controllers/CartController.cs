@@ -21,6 +21,7 @@ namespace ComicsShopWebApp.Controllers
             var viewModel = new CartViewModel();
             var order = await CartOrderAysnc();
             viewModel.Items = order.ProductItems.ToList();
+            viewModel.Total = order.ProductItems.Sum(item => item.Product.Cost * item.Quantity);
             return View(viewModel);
         }
 
