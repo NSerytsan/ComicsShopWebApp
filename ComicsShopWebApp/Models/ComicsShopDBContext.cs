@@ -23,13 +23,14 @@ namespace ComicsShopWebApp.Models
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<Status>().HasData(
-                new Status { Id = 1, StatusName = "Новий" },
-                new Status { Id = 2, StatusName = "Обробляється менеджером" },
-                new Status { Id = 3, StatusName = "Дані підтверджені" },
-                new Status { Id = 4, StatusName = "Очікує відправки" },
-                new Status { Id = 5, StatusName = "Передано до служби доставки" },
-                new Status { Id = 6, StatusName = "Доставляється" },
-                new Status { Id = 7, StatusName = "Замовлення отримано" }
+                new Status { Id = 1, StatusName = "CART" },
+                new Status { Id = 2, StatusName = "Новий" },
+                new Status { Id = 3, StatusName = "Обробляється менеджером" },
+                new Status { Id = 4, StatusName = "Дані підтверджені" },
+                new Status { Id = 5, StatusName = "Очікує відправки" },
+                new Status { Id = 6, StatusName = "Передано до служби доставки" },
+                new Status { Id = 7, StatusName = "Доставляється" },
+                new Status { Id = 8, StatusName = "Замовлення отримано" }
                 );
 
             modelBuilder.Entity<Category>().HasData(
@@ -47,7 +48,9 @@ namespace ComicsShopWebApp.Models
                 );
 
             modelBuilder.Entity<Product>().Navigation(p => p.Categories).AutoInclude();
-
+            modelBuilder.Entity<Order>().Navigation(o => o.ProductItems).AutoInclude();
+            modelBuilder.Entity<Order>().Navigation(o => o.Status).AutoInclude();
+            modelBuilder.Entity<ProductItem>().Navigation(p => p.Product).AutoInclude();
         }
 
     }

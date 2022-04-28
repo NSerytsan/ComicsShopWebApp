@@ -1,4 +1,5 @@
-﻿@{
+﻿@model CartViewModel;
+@{
     ViewData["Title"] = "Кошик";
 }
 
@@ -31,7 +32,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach(var productItem in @ViewBag.cart)
+        @foreach(var productItem in @Model.Items)
         {
             <tr>
                 <td width="50%">
@@ -64,7 +65,7 @@
             <td></td>
             <td align="right">Разом:</td>
             <td>
-                @ViewBag.total
+                @Model.Total
             </td>
         </tr>
     </tbody>

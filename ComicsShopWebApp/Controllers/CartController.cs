@@ -1,5 +1,6 @@
-﻿using ComicsShopWebApp.Helpers;
-using ComicsShopWebApp.Models;
+﻿using ComicsShopWebApp.Models;
+using ComicsShopWebApp.ViewModels;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ComicsShopWebApp.Controllers
@@ -7,57 +8,52 @@ namespace ComicsShopWebApp.Controllers
     public class CartController : Controller
     {
         private readonly ComicsShopDBContext _db;
+        private readonly UserManager<User> _userManager;
 
-        public CartController(ComicsShopDBContext db)
+        public CartController(ComicsShopDBContext db, UserManager<User> userManager)
         {
             _db = db;
+            _userManager = userManager;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var cart = SessionHelper.GetObjectFromJson<List<ProductItem>>(HttpContext.Session, "cart");
-            if (cart != null)
-            {
-                ViewBag.cart = cart;
-                ViewBag.total = cart.Sum(item => item.Product.Cost * item.Quantity);
-            }
-
-            return View();
+            var viewModel = new CartViewModel();
+            var order = await CartOrderAysnc();
+            viewModel.Items = order.ProductItems.ToList();
+            return View(viewModel);
         }
 
-        public IActionResult Buy(int id)
+        public async Task<IActionResult> Buy(int id)
         {
-            var cart = SessionHelper.GetObjectFromJson<List<ProductItem>>(HttpContext.Session, "cart");
-            if (cart == null)
+            var order = await CartOrderAysnc();
+
+            var productItem = order.ProductItems.Where(pi => pi.Id == id).FirstOrDefault();
+            if (productItem != null)
             {
-                cart = new List<ProductItem>();
-                cart.Add(new ProductItem { Product = _db.Products.Find(id), Quantity = 1 });
-                SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
+                productItem.Quantity++;
             }
             else
             {
-                int idx = -1;
-                for (int i = 0; i < cart.Count; i++)
-                {
-                    if (cart[i].Product.Id == id)
-                    {
-                        idx = i;
-                        break;
-                    }
-                }
-
-                if (idx != -1)
-                {
-                    cart[idx].Quantity++;
-                }
-                else
-                {
-                    cart.Add(new ProductItem { Product = _db.Products.Find(id), Quantity = 1 });
-                }
-                SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
+                order.ProductItems.Add(new ProductItem { Product = _db.Products.Find(id), Quantity = 1 });
             }
 
+            _db.SaveChanges();
+
             return RedirectToAction("Index", "Product");
+        }
+
+        private async Task<Order> CartOrderAysnc()
+        {
+            var user = await _userManager.GetUserAsync(this.User);
+            var order = _db.Orders.Where(o => o.Status.StatusName.Equals("CART") && o.UserId == user.Id).FirstOrDefault();
+            if (order == null)
+            {
+                order = new Order() { UserId = user.Id, StatusId = _db.Statuses.Where(s => s.StatusName.Equals("CART")).First().Id, DeliveryAdress = "CART" };
+                _db.Orders.Add(order);
+                _db.SaveChanges();
+            }
+            return order;
         }
     }
 }
