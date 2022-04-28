@@ -9,9 +9,12 @@
             <h2 class="text-primary">@ViewData["Title"]</h2>
         </div>
         <div class="text-end">
-            <a asp-controller="Order" asp-action="Create" class="btn btn-primary">
-                Оформити замовлення
+            @if (@Model.Items.Count > 0)
+            {
+                <a asp-controller="Order" asp-action="Create" class="btn btn-primary">
+                    Оформити замовлення
             </a>
+            }
         </div>
     </div>
 </div>
@@ -61,13 +64,16 @@
                 </td>*@
             </tr>
         }
-        <tr>
-            <td></td>
+        @if (@Model.Items.Count > 0)
+        {
+            <tr>
+                <td></td>
             <td align="right">Разом:</td>
             <td>
                 @Model.Total
             </td>
         </tr>
+        }
     </tbody>
 </table>
 
