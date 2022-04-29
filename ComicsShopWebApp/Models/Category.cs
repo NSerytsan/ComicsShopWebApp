@@ -8,7 +8,7 @@ namespace ComicsShopWebApp.Models
     {
         public Category()
         {
-            ProductCategories = new HashSet<ProductCategory>();
+            Products = new HashSet<Product>();
         }
 
         public int Id { get; set; }
@@ -20,6 +20,6 @@ namespace ComicsShopWebApp.Models
         [Display(Name = ("Опис категорії"))]
         public string? CategoryDescription { get; set; }
 
-        public virtual ICollection<ProductCategory> ProductCategories { get; set; }
+        public virtual ICollection<Product> Products { get; set; }
     }
 }

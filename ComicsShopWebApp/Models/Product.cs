@@ -9,7 +9,7 @@ namespace ComicsShopWebApp.Models
     {
         public Product()
         {
-            ProductCategories = new HashSet<ProductCategory>();
+            Categories = new HashSet<Category>();
         }
 
         public int Id { get; set; }
@@ -17,9 +17,6 @@ namespace ComicsShopWebApp.Models
         [Required(ErrorMessage = "Поле не повинно бути порожнім")]
         [Display(Name = "Назва продукту")]
         public string ProductName { get; set; } = null!;
-
-        [Display(Name = "Категорія")]
-        public string? Category { get; set; } = null!;
 
         [Required(ErrorMessage = "Поле не повинно бути порожнім")]
         [Display(Name = "Ціна")]
@@ -32,6 +29,6 @@ namespace ComicsShopWebApp.Models
         [Range(0, 1000000)]
         public int NumLeft { get; set; }
 
-        public virtual ICollection<ProductCategory> ProductCategories { get; set; }
+        public virtual ICollection<Category> Categories { get; set; }
     }
 }

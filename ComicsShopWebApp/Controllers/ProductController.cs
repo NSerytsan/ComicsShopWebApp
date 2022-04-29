@@ -3,6 +3,7 @@ using ComicsShopWebApp.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 
 namespace ComicsShopWebApp.Controllers
 {
@@ -55,12 +56,11 @@ namespace ComicsShopWebApp.Controllers
                 var categoryIds = viewModel.Categories.Where(x => x.Selected).Select(y => y.Value);
                 foreach (var catId in categoryIds)
                 {
-                    var productCat = new ProductCategory()
+                    var category = _db.Categories.Find(int.Parse(catId));
+                    if (category != null)
                     {
-                        CategoryId = int.Parse(catId),
-                        ProductId = viewModel.Id
-                    };
-                    product.ProductCategories.Add(productCat);
+                        product.Categories.Add(category);
+                    }
                 }
 
                 _db.Products.Add(product);
@@ -84,7 +84,7 @@ namespace ComicsShopWebApp.Controllers
                 return NotFound();
             }
 
-            var categoryIds = _db.ProductCategories.Where(p => p.ProductId == product.Id).Select(c => c.CategoryId).ToList();
+            var categoryIds = product.Categories.Select(c => c.Id).ToList();
             var listItem = _db.Categories.Select(c => new SelectListItem()
             {
                 Text = c.CategoryName,
@@ -113,29 +113,32 @@ namespace ComicsShopWebApp.Controllers
             if (ModelState.IsValid)
             {
                 var product = _db.Products.Find(viewModel.Id);
-                product.NumLeft = viewModel.NumLeft;
-                product.ProductName = viewModel.ProductName;
-                product.Cost = viewModel.Cost;
-
-                var categoryIds = viewModel.Categories.Where(x => x.Selected).Select(y => y.Value);
-
-                _db.ProductCategories.RemoveRange(_db.ProductCategories.Where(pc => pc.ProductId == product.Id));
-
-                foreach (var catId in categoryIds)
+                if (product != null)
                 {
-                    var productCat = new ProductCategory()
+                    product.NumLeft = viewModel.NumLeft;
+                    product.ProductName = viewModel.ProductName;
+                    product.Cost = viewModel.Cost;
+
+                    var categoryIds = viewModel.Categories.Where(x => x.Selected).Select(y => y.Value);
+
+                    product.Categories.Clear();
+
+                    foreach (var catId in categoryIds)
                     {
-                        CategoryId = int.Parse(catId),
-                        ProductId = product.Id
-                    };
-                    product.ProductCategories.Add(productCat);
+                        var category = _db.Categories.FirstOrDefault(c => c.Id == int.Parse(catId));
+                        if (category != null)
+                        {
+                            product.Categories.Add(category);
+                        }
+                    }
+
+                    _db.Products.Update(product);
+
+                    _db.SaveChanges();
+                    return RedirectToAction("Index");
                 }
-
-                _db.Products.Update(product);
-
-                _db.SaveChanges();
-                return RedirectToAction("Index");
             }
+
             return View(viewModel);
         }
 

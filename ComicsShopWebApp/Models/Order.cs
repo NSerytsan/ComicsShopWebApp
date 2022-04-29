@@ -10,14 +10,15 @@ namespace ComicsShopWebApp.Models
         }
         public int Id { get; set; }
         public string UserId { get; set; } = null!;
+        public int StatusId { get; set; }
         
-        public DateTime OrderDate { get; set; }
+        public DateTime OrderDate { get; set; } = DateTime.Now;
         public string DeliveryAdress { get; set; } = null!;
         public int PaymentStatus { get; set; }
         [Column(TypeName = "money")]
         public decimal Cost { get; set; }
 
-        public Status Status { get; set; }
+        public virtual Status Status { get; set; } = null!;
         public virtual User User { get; set; } = null!;
         public virtual ICollection<ProductItem> ProductItems { get; set; } = null!;
     }

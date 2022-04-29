@@ -15,7 +15,6 @@ namespace ComicsShopWebApp.Models
         public virtual DbSet<UserSupport> UserSupports { get; set; } = null!;
         public virtual DbSet<Order> Orders { get; set; } = null!;
         public virtual DbSet<Product> Products { get; set; } = null!;
-        public virtual DbSet<ProductCategory> ProductCategories { get; set; } = null!;
         public virtual DbSet<ProductItem> ProductItems { get; set; } = null!;
         public virtual DbSet<Status> Statuses { get; set; } = null!;
 
@@ -23,6 +22,7 @@ namespace ComicsShopWebApp.Models
         {
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.Entity<Product>().Navigation(p => p.Categories).AutoInclude();
             modelBuilder.Entity<Order>()
                 .HasOne(o => o.User)
                 .WithMany(u => u.Orders)
