@@ -42,7 +42,7 @@ namespace ComicsShopWebApp.Controllers
 
         [Authorize]
         [HttpPost]
-        public async Task<IActionResult> Confirm(OrderViewModel viewModel)
+        public async Task<IActionResult> Create(OrderViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
@@ -50,10 +50,18 @@ namespace ComicsShopWebApp.Controllers
                 var order = _db.Orders.Where(o => o.Status.StatusName.Equals("CART") && o.UserId == user.Id).FirstOrDefault();
                 if (order == null) return NotFound();
 
+                order.DeliveryAddress = viewModel.DeliveryAddress;
+                order.StatusId = _db.Statuses.Where(s => s.StatusName.Equals("Новий")).First().Id;
+                order.OrderDate = DateTime.Now;
+                order.Cost = order.ProductItems.Sum(item => item.Product.Cost * item.Quantity);
+
+                _db.Update(order);
+                _db.SaveChanges();
+
                 return RedirectToAction("Index", "Product");
             }
-
-            return RedirectToAction("Create", "Order");
+ 
+            return await Create();
         }
     }
 }

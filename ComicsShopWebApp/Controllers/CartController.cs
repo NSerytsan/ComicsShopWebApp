@@ -72,7 +72,7 @@ namespace ComicsShopWebApp.Controllers
             var order = _db.Orders.Where(o => o.Status.StatusName.Equals("CART") && o.UserId == user.Id).FirstOrDefault();
             if (order == null)
             {
-                order = new Order() { UserId = user.Id, StatusId = _db.Statuses.Where(s => s.StatusName.Equals("CART")).First().Id, DeliveryAdress = "CART" };
+                order = new Order() { UserId = user.Id, StatusId = _db.Statuses.Where(s => s.StatusName.Equals("CART")).First().Id, DeliveryAddress = string.Empty };
                 _db.Orders.Add(order);
                 _db.SaveChanges();
             }

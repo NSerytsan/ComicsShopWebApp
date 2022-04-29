@@ -13,7 +13,7 @@ namespace ComicsShopWebApp.Models
         public int StatusId { get; set; }
 
         public DateTime OrderDate { get; set; } = DateTime.Now;
-        public string DeliveryAdress { get; set; } = null!;
+        public string DeliveryAddress { get; set; } = null!;
         public int PaymentStatus { get; set; }
         [Column(TypeName = "money")]
         public decimal Cost { get; set; }
