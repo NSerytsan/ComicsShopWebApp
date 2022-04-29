@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 using ComicsShopWebApp.ViewModels;
 using ComicsShopWebApp.Models;
 
@@ -20,6 +21,7 @@ namespace ComicsShopWebApp.Controllers
             return View();
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> Create()
         {
@@ -38,6 +40,7 @@ namespace ComicsShopWebApp.Controllers
             return View(viewModel);
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Confirm(OrderViewModel viewModel)
         {
@@ -46,9 +49,11 @@ namespace ComicsShopWebApp.Controllers
                 var user = await _userManager.GetUserAsync(this.User);
                 var order = _db.Orders.Where(o => o.Status.StatusName.Equals("CART") && o.UserId == user.Id).FirstOrDefault();
                 if (order == null) return NotFound();
+
+                return RedirectToAction("Index", "Product");
             }
 
-            return View(viewModel);
+            return RedirectToAction("Create", "Order");
         }
     }
 }

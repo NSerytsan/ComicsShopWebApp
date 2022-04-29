@@ -2,6 +2,7 @@
 using ComicsShopWebApp.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ComicsShopWebApp.Controllers
 {
@@ -16,6 +17,7 @@ namespace ComicsShopWebApp.Controllers
             _userManager = userManager;
         }
 
+        [Authorize]
         public async Task<IActionResult> Index()
         {
             var order = await CartOrderAsync();
@@ -27,6 +29,7 @@ namespace ComicsShopWebApp.Controllers
             return View(viewModel);
         }
 
+        [Authorize]
         public async Task<IActionResult> Buy(int id)
         {
             var order = await CartOrderAsync();
@@ -48,6 +51,7 @@ namespace ComicsShopWebApp.Controllers
             return RedirectToAction("Index", "Product");
         }
 
+        [Authorize]
         public async Task<IActionResult> Delete(int id)
         {
             var order = await CartOrderAsync();
@@ -61,6 +65,7 @@ namespace ComicsShopWebApp.Controllers
 
             return RedirectToAction("Index", "Cart");
         }
+
         private async Task<Order> CartOrderAsync()
         {
             var user = await _userManager.GetUserAsync(this.User);
