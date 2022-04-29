@@ -70,33 +70,30 @@ namespace ComicsShopWebApp.Controllers
         }
 
         [Authorize]
-        public IActionResult Delete(int? id)
+        public IActionResult Delete(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-            var CategoryFromDb = _db.Categories.Find(id);
+            var category = _db.Categories.Find(id);
 
-            if (CategoryFromDb == null)
+            if (category == null)
             {
                 return NotFound();
             }
-            return View(CategoryFromDb);
+            _db.Entry(category).Collection(p => p.Products).Load();
+            return View(category);
         }
 
         [Authorize]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public IActionResult DeletePost(int? id)
+        public IActionResult DeletePost(int id)
         {
-            var obj = _db.Categories.Find(id);
-            if (obj == null)
+            var category = _db.Categories.Find(id);
+            if (category == null)
             {
                 return NotFound();
             }
 
-            _db.Categories.Remove(obj);
+            _db.Categories.Remove(category);
             _db.SaveChanges();
             return RedirectToAction("Index");
         }

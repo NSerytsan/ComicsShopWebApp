@@ -7,6 +7,12 @@
 			<h2 class="text-primary">Видалити категорію</h2>
 			<hr />
 		</div>
+		@if (Model.Products.Count() > 0)
+		{
+			<div class="alert alert-danger" role="alert">
+				Неможливо видалити категорію
+			</div>
+		}
 		<div class="mb-3">
 			<label asp-for="CategoryName"></label>
 			<input asp-for="CategoryName" disabled class="form-control"/>
@@ -15,7 +21,10 @@
 			<label asp-for="CategoryDescription"></label>
 			<input asp-for="CategoryDescription" disabled class="form-control"/>
 		</div>
+		@if (@Model.Products.Count() == 0)
+		{
 		<button type="submit" class="btn btn-danger" style="width:150px">Видалити</button>
+		}
 		<a asp-controller="Category" asp-action="Index" class="btn btn-secondary" style="width:110px">
 			Скасувати
 		</a>
