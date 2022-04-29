@@ -51,7 +51,6 @@ namespace ComicsShopWebApp.Models
             modelBuilder.Entity<Order>().Navigation(o => o.ProductItems).AutoInclude();
             modelBuilder.Entity<Order>().Navigation(o => o.Status).AutoInclude();
             modelBuilder.Entity<ProductItem>().Navigation(p => p.Product).AutoInclude();
-            //modelBuilder.Entity<Category>().Navigation(c => c.Products).AutoInclude();
         }
 
     }
