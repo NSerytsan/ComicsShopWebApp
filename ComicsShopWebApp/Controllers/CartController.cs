@@ -18,7 +18,7 @@ namespace ComicsShopWebApp.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var order = await CartOrderAysnc();
+            var order = await CartOrderAsync();
             var viewModel = new CartViewModel
             {
                 Items = order.ProductItems.ToList(),
@@ -29,7 +29,7 @@ namespace ComicsShopWebApp.Controllers
 
         public async Task<IActionResult> Buy(int id)
         {
-            var order = await CartOrderAysnc();
+            var order = await CartOrderAsync();
 
             var productItem = order.ProductItems.FirstOrDefault(pi => pi.Product.Id == id);
             if (productItem != null)
@@ -38,7 +38,9 @@ namespace ComicsShopWebApp.Controllers
             }
             else
             {
-                order.ProductItems.Add(new ProductItem { Product = _db.Products.Find(id), Quantity = 1 });
+                var product = _db.Products.Find(id);
+                if (product == null) return NotFound();
+                order.ProductItems.Add(new ProductItem { Product = product, Quantity = 1 });
             }
 
             _db.SaveChanges();
@@ -48,7 +50,7 @@ namespace ComicsShopWebApp.Controllers
 
         public async Task<IActionResult> Delete(int id)
         {
-            var order = await CartOrderAysnc();
+            var order = await CartOrderAsync();
 
             var productItem = order.ProductItems.Where(pi => pi.Product.Id == id).FirstOrDefault();
             if (productItem != null)
@@ -59,7 +61,7 @@ namespace ComicsShopWebApp.Controllers
 
             return RedirectToAction("Index", "Cart");
         }
-        private async Task<Order> CartOrderAysnc()
+        private async Task<Order> CartOrderAsync()
         {
             var user = await _userManager.GetUserAsync(this.User);
             var order = _db.Orders.Where(o => o.Status.StatusName.Equals("CART") && o.UserId == user.Id).FirstOrDefault();

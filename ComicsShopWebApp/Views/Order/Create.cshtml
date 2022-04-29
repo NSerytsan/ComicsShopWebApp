@@ -1,0 +1,55 @@
+@model OrderViewModel
+
+@{
+    ViewData["Title"] = "Замовлення";
+}
+
+<h1>@ViewData["Title"]</h1>
+<div class="container">
+    <form method="post" asp-controller="Order" asp-action="Submit">
+    <div class="row">
+        <table class="table table-borderless table-striped" style="width:100%">
+            <thead>
+                <tr>
+                    <th>
+                        Назва продукту
+                    </th>
+                    <th>
+                        Кількість
+                    </th>
+                    <th>
+                        Вартість
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var productItem in @Model.Items)
+                {
+                    <tr>
+                        <td width="50%">
+                            @productItem.Product.ProductName
+                        </td>
+                        <td width="50%">
+                            @productItem.Quantity
+                        </td>
+                        <td width="50%">
+                            @(productItem.Product.Cost * productItem.Quantity)
+                        </td>
+                    </tr>
+                }
+                @if (@Model.Items.Count > 0)
+                {
+                    <tr>
+                        <td></td>
+                        <td align="right">Разом:</td>
+                        <td>
+                            @Model.Total
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    </form>
+</div>
