@@ -22,16 +22,32 @@ namespace ComicsShopWebApp.Models
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Product>().Navigation(p => p.Categories).AutoInclude();
-            modelBuilder.Entity<Order>()
-                .HasOne(o => o.User)
-                .WithMany(u => u.Orders)
-                .HasForeignKey(o => o.UserId);
+            modelBuilder.Entity<Status>().HasData(
+                new Status { Id = 1, StatusName = "Новий" },
+                new Status { Id = 2, StatusName = "Обробляється менеджером" },
+                new Status { Id = 3, StatusName = "Дані підтверджені" },
+                new Status { Id = 4, StatusName = "Очікує відправки" },
+                new Status { Id = 5, StatusName = "Передано до служби доставки" },
+                new Status { Id = 6, StatusName = "Доставляється" },
+                new Status { Id = 7, StatusName = "Замовлення отримано" }
+                );
 
-            modelBuilder.Entity<UserSupport>()
-                .HasOne(s => s.User)
-                .WithMany(u => u.UserSupports)
-                .HasForeignKey(s => s.UserId);
+            modelBuilder.Entity<Category>().HasData(
+                new Category { Id = 1, CategoryName = "Манхви", CategoryDescription = "Корейські кольорові комікси" },
+                new Category { Id = 2, CategoryName = "Манга", CategoryDescription = "Японські чорно-білі комікси" },
+                new Category { Id = 3, CategoryName = "Журнали", CategoryDescription = "Журнали зарубіжних видань" },
+                new Category { Id = 4, CategoryName = "Аксесуари", CategoryDescription = "Аксесуари з вашими улюбленими героями" },
+                new Category { Id = 5, CategoryName = "Новели", CategoryDescription = "Новели азійських авторів" },
+                new Category { Id = 6, CategoryName = "Продукція англійською" },
+                new Category { Id = 7, CategoryName = "Продукція українською" },
+                new Category { Id = 8, CategoryName = "Продукція японською" },
+                new Category { Id = 9, CategoryName = "У жорсткій обкладинці" },
+                new Category { Id = 10, CategoryName = "У м'якій обкладинці" },
+                new Category { Id = 11, CategoryName = "Комікси" }
+                );
+
+            modelBuilder.Entity<Product>().Navigation(p => p.Categories).AutoInclude();
+
         }
 
     }

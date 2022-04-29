@@ -7,6 +7,5 @@ namespace ComicsShopWebApp.Models
     {
         public int Id { get; set; }
         public string StatusName { get; set; } = null!;
-        public bool StatusType { get; set; }
     }
 }
