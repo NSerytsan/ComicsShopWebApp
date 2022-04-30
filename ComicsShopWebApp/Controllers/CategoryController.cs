@@ -15,8 +15,8 @@ namespace ComicsShopWebApp.Controllers
 
         public IActionResult Index()
         {
-            IEnumerable<Category> CategoryList = _db.Categories;
-            return View(CategoryList);
+            var categories = _db.Categories;
+            return View(categories);
         }
 
         [Authorize]
@@ -28,45 +28,41 @@ namespace ComicsShopWebApp.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Category obj)
+        public IActionResult Create(Category category)
         {
             if (ModelState.IsValid)
             {
-                _db.Categories.Add(obj);
+                _db.Categories.Add(category);
                 _db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(obj);
+            return View(category);
         }
 
         [Authorize]
-        public IActionResult Edit(int? id)
+        public IActionResult Edit(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-            var CategoryFromDb = _db.Categories.Find(id);
+            var category = _db.Categories.Find(id);
 
-            if (CategoryFromDb == null)
+            if (category == null)
             {
                 return NotFound();
             }
-            return View(CategoryFromDb);
+            return View(category);
         }
 
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(Category obj)
+        public IActionResult Edit(Category category)
         {
             if (ModelState.IsValid)
             {
-                _db.Categories.Update(obj);
+                _db.Categories.Update(category);
                 _db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(obj);
+            return View(category);
         }
 
         [Authorize]
@@ -78,6 +74,7 @@ namespace ComicsShopWebApp.Controllers
             {
                 return NotFound();
             }
+            
             _db.Entry(category).Collection(p => p.Products).Load();
             return View(category);
         }
