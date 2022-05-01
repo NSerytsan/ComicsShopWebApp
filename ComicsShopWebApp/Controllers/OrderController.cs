@@ -54,6 +54,11 @@ namespace ComicsShopWebApp.Controllers
                 order.StatusId = _db.Statuses.Where(s => s.StatusName.Equals("Новий")).First().Id;
                 order.OrderDate = DateTime.Now;
                 order.Cost = order.ProductItems.Sum(item => item.Product.Cost * item.Quantity);
+                foreach(var item in order.ProductItems)
+                {
+                    item.Product.NumLeft -= item.Quantity;
+                    _db.Update(item.Product);
+                }
 
                 _db.Update(order);
                 _db.SaveChanges();
