@@ -16,9 +16,12 @@ namespace ComicsShopWebApp.Controllers
             _userManager = userManager;
         }
 
-        public IActionResult Index()
+        [Authorize]
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var user = await _userManager.GetUserAsync(this.User);
+            var orders = _db.Orders.Where(o => !o.Status.StatusName.Equals("CART") && o.UserId == user.Id);
+            return View(orders);
         }
 
         [Authorize]

@@ -1,5 +1,65 @@
-﻿@{
+﻿@model IEnumerable<Order>
+@{
     ViewData["Title"] = "Замовлення";
 }
 
-<h1>Замовлення</h1>
+<div class="container p-3">
+    <div calss="row p-4">
+        <div class="col-6">
+            <h2 class="text-primary">@ViewData["Title"]</h2>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    @foreach (var order in Model)
+    {
+        <div class="card border-primary mb-3" style="max-width: 100%;">
+            <div class="card-header">
+                <p class="card-text">@order.Id</p>
+            </div>
+            <div class="card-body">
+                <table class="table table-borderless table-striped" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>
+                                Назва продукту
+                            </th>
+                            <th>
+                                Кількість
+                            </th>
+                            <th>
+                                Вартість
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var productItem in order.ProductItems)
+                        {
+                            <tr>
+                                <td width="50%">
+                                    @productItem.Product.ProductName
+                                </td>
+                                <td width="50%">
+                                    @productItem.Quantity
+                                </td>
+                                <td width="50%">
+                                    @(productItem.Product.Cost * productItem.Quantity)
+                                </td>
+                            </tr>
+                        }
+                        <tr>
+                            <td></td>
+                            <td align="right">Разом:</td>
+                            <td>
+                                @order.Cost
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <br />
+    }
+</div>
