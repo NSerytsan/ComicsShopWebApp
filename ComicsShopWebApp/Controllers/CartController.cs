@@ -37,13 +37,19 @@ namespace ComicsShopWebApp.Controllers
             var productItem = order.ProductItems.FirstOrDefault(pi => pi.Product.Id == id);
             if (productItem != null)
             {
-                productItem.Quantity++;
+                if (productItem.Product.NumLeft > productItem.Quantity)
+                {
+                    productItem.Quantity++;
+                }
             }
             else
             {
                 var product = _db.Products.Find(id);
                 if (product == null) return NotFound();
-                order.ProductItems.Add(new ProductItem { Product = product, Quantity = 1 });
+                if (product.NumLeft > 0)
+                {
+                    order.ProductItems.Add(new ProductItem { Product = product, Quantity = 1 });
+                }
             }
 
             _db.SaveChanges();
