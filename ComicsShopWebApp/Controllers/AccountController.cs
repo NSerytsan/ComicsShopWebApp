@@ -30,9 +30,8 @@ namespace ComicsShopWebApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login(LoginViewModel model, string? returnUrl = null)
+        public async Task<IActionResult> Login(LoginViewModel model, string? returnUrl)
         {
-            returnUrl ??= Url.Content("~/");
             if (ModelState.IsValid)
             {
                 var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
@@ -41,7 +40,7 @@ namespace ComicsShopWebApp.Controllers
                 {
                     if (!string.IsNullOrEmpty(returnUrl))
                     {
-                        return Redirect(returnUrl);
+                        return LocalRedirect(returnUrl);
                     }
                     else
                     {
@@ -90,5 +89,18 @@ namespace ComicsShopWebApp.Controllers
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
+
+        [HttpGet]
+        public async Task<IActionResult> EditProfile()
+        {
+            var user = await _userManager.GetUserAsync(this.User);
+            var modelView = new EditProfileViewModel()
+            {
+                FullName = user.FullName,
+                DefaultDeliveryAddress = user.DefaultDeliveryAddress ?? string.Empty
+            };
+
+            return View(modelView);
+        } 
     }
 }
