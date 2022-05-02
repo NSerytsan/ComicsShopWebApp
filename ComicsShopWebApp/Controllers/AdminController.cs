@@ -32,7 +32,7 @@ namespace ComicsShopWebApp.Controllers
                 var result = await _roleManager.CreateAsync(role);
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("Index", "Product");
+                    return RedirectToAction("ListRoles", "Admin");
                 }
 
                 foreach (IdentityError error in result.Errors)
@@ -42,6 +42,13 @@ namespace ComicsShopWebApp.Controllers
             }
 
             return View(viewModel);
+        }
+
+        [HttpGet]
+        public IActionResult ListRoles()
+        {
+            var roles = _roleManager.Roles;
+            return View(roles);
         }
 
     }
