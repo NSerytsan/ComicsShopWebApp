@@ -4,67 +4,69 @@
     ViewData["Title"] = "Створити замовлення";
 }
 
-<form method="post" asp-controller="Order" asp-action="Create">
-    <div class="border p-3 mt-4">
-        <div class="row pb-2">
-            <h2 class="text-primary">@ViewData["Title"]</h2>
-            <hr />
-        </div>
-        <div class="mb-3">
-            <table class="table table-borderless table-striped" style="width:100%">
-                <thead>
-                    <tr>
-                        <th>
-                            Назва продукту
-                        </th>
-                        <th>
-                            Кількість
-                        </th>
-                        <th>
-                            Вартість
-                        </th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var productItem in @Model.Items)
-                    {
+<div class="container">
+    <form method="post" asp-controller="Order" asp-action="Create">
+        <div class="border p-3 mt-4">
+            <div class="row pb-2">
+                <h2 class="text-primary">@ViewData["Title"]</h2>
+                <hr />
+            </div>
+            <div class="mb-3">
+                <table class="table table-borderless table-striped" style="width:100%">
+                    <thead>
                         <tr>
-                            <td width="50%">
-                                @productItem.Product.ProductName
-                            </td>
-                            <td width="50%">
-                                @productItem.Quantity
-                            </td>
-                            <td width="50%">
-                                @(productItem.Product.Cost * productItem.Quantity)
-                            </td>
+                            <th>
+                                Назва продукту
+                            </th>
+                            <th>
+                                Кількість
+                            </th>
+                            <th>
+                                Вартість
+                            </th>
+                            <th></th>
                         </tr>
-                    }
-                    @if (@Model.Items.Count > 0)
-                    {
-                        <tr>
-                            <td></td>
-                            <td align="right">Разом:</td>
-                            <td>
-                                @Model.Total
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        @foreach (var productItem in @Model.Items)
+                        {
+                            <tr>
+                                <td width="50%">
+                                    @productItem.Product.ProductName
+                                </td>
+                                <td width="50%">
+                                    @productItem.Quantity
+                                </td>
+                                <td width="50%">
+                                    @(productItem.Product.Cost * productItem.Quantity)
+                                </td>
+                            </tr>
+                        }
+                        @if (@Model.Items.Count > 0)
+                        {
+                            <tr>
+                                <td></td>
+                                <td align="right">Разом:</td>
+                                <td>
+                                    @Model.Total
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="mb-3 col-lg-6">
+                <label asp-for="DeliveryAddress" class="form-label mt-4"></label>
+                <input asp-for="DeliveryAddress" class="form-control">
+                <span asp-validation-for="DeliveryAddress" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-primary" style="width:120px">Створити</button>
+            <a asp-controller="Cart" asp-action="Index" class="btn btn-secondary" style="width:110px">
+                Скасувати
+            </a>
         </div>
-        <div class="mb-3 col-lg-6">
-            <label asp-for="DeliveryAddress" class="form-label mt-4"></label>
-            <input asp-for="DeliveryAddress" class="form-control">
-            <span asp-validation-for="DeliveryAddress" class="text-danger"></span>
-        </div>
-        <button type="submit" class="btn btn-primary" style="width:120px">Створити</button>
-        <a asp-controller="Cart" asp-action="Index" class="btn btn-secondary" style="width:110px">
-            Скасувати
-        </a>
-    </div>
-</form>
+    </form>
+</div>
 
 @section Scripts {
 <partial name="_ValidationScriptsPartial" />

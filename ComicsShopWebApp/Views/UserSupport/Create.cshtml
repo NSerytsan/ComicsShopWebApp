@@ -1,16 +1,26 @@
 ﻿@model UserSupportViewModel
 
-<form method="post">
-	<div class="border p-3 mt-4">
-		<div class="row pb-2">
-			<h2 class="text-primary">Створити нове зверенення</h2>
-			<hr />
+@{
+	ViewData["Title"] = "Створити нове зверенення";
+}
+
+<div class="container">
+	<form method="post">
+		<div class="border p-3 mt-4">
+			<div class="row pb-2">
+				<h2 class="text-primary">@ViewData["Title"]</h2>
+				<hr />
+			</div>
+			<div class="mb-3">
+				<label asp-for="TextMessage"></label>
+				<textarea class="form-control" rows="5" asp-for="TextMessage"></textarea>
+				<span asp-validation-for="TextMessage" class="text-danger"></span>
+			</div>
+			<button type="submit" class="btn btn-primary" style="width:120px">Створити</button>
 		</div>
-		<div class="mb-3">
-			<label asp-for="TextMessage"></label>
-			<textarea class="form-control" rows="5" asp-for="TextMessage"></textarea>
-			<span asp-validation-for="TextMessage" class="text-danger"></span>
-		</div>
-		<button type="submit" class="btn btn-primary" style="width:120px">Створити</button>
-	</div>
-</form>
+	</form>
+</div>
+
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
+}

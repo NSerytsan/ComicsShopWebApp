@@ -1,47 +1,50 @@
-﻿@using ComicsShopWebApp.ViewModels
-@model RegisterViewModel
+﻿@model RegisterViewModel
 
 @{
     ViewData["Title"] = "Реєстрація нового користувача";
 }
 
-<h1>@ViewData["Title"]</h1>
-
-<div class="row">
+<div class="container">
     <div class="col-lg-6">
         <form method="post" asp-controller="Account" asp-action="Register">
-            <div asp-validation-summary="ModelOnly"></div>
-            <fieldset>
-                <div class="form-group">
-                    <label asp-for="Email" class="form-label mt-4"></label>
-                    <input asp-for="Email" class="form-control">
-                    <span asp-validation-for="Email" class="text-danger"></span>
+            <div class="border p-3 mt-4">
+                <div class="row pb-2">
+                    <h2 class="text-primary">@ViewData["Title"]</h2>
+                    <hr />
                 </div>
-                <div class="form-group">
-                    <label asp-for="Password" class="form-label mt-4"></label>
-                    <input asp-for="Password" class="form-control">
-                    <span asp-validation-for="Password" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="ConfirmPassword" class="form-label mt-4"></label>
-                    <input asp-for="ConfirmPassword" class="form-control">
-                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="FullName" class="form-label mt-4"></label>
-                    <input asp-for="FullName" class="form-control">
-                    <span asp-validation-for="FullName" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="DefaultDeliveryAddress" class="form-label mt-4"></label>
-                    <input asp-for="DefaultDeliveryAddress" class="form-control">
-                    <span asp-validation-for="DefaultDeliveryAddress" class="text-danger"></span>
-                </div>
-                <br>
-                <div class="form-group">
-                    <button type="submit" class="btn btn-primary">Реєстрація</button>
-                </div>
-            </fieldset>
+                <div asp-validation-summary="ModelOnly"></div>
+                <fieldset>
+                    <div class="form-group mb-3">
+                        <label asp-for="Email" class="form-label"></label>
+                        <input asp-for="Email" class="form-control">
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label asp-for="Password" class="form-label"></label>
+                        <input asp-for="Password" class="form-control">
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label asp-for="ConfirmPassword" class="form-label"></label>
+                        <input asp-for="ConfirmPassword" class="form-control">
+                        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label asp-for="FullName" class="form-label"></label>
+                        <input asp-for="FullName" class="form-control">
+                        <span asp-validation-for="FullName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label asp-for="DefaultDeliveryAddress" class="form-label"></label>
+                        <input asp-for="DefaultDeliveryAddress" class="form-control">
+                        <span asp-validation-for="DefaultDeliveryAddress" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <button type="submit" class="btn btn-primary">Реєстрація</button>
+                    </div>
+                </fieldset>
+            </div>
         </form>
     </div>
 </div>

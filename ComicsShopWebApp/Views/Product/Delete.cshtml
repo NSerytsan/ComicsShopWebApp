@@ -1,27 +1,37 @@
 ﻿@model Product
 
-<form method="post">
-	<input hidden asp-for="Id" />
-	<div class="border p-3 mt-4">
-		<div class="row pb-2">
-			<h2 class="text-primary">Видалити продукт</h2>
-			<hr />
+@{
+	ViewData["Title"] = "Видалити продукт";
+}
+
+<div class="container">
+	<form method="post">
+		<input hidden asp-for="Id" />
+		<div class="border p-3 mt-4">
+			<div class="row pb-2">
+				<h2 class="text-primary">@ViewData["Title"]</h2>
+				<hr />
+			</div>
+			<div class="mb-3">
+				<label asp-for="ProductName"></label>
+				<input asp-for="ProductName" disabled class="form-control" />
+			</div>
+			<div class="mb-3">
+				<label asp-for="Cost"></label>
+				<input asp-for="Cost" disabled class="form-control" />
+			</div>
+			<div class="mb-3">
+				<label asp-for="NumLeft"></label>
+				<input asp-for="NumLeft" disabled class="form-control" />
+			</div>
+			<button type="submit" class="btn btn-primary" style="width:120px">Видалити</button>
+			<a asp-controller="Product" asp-action="Index" class="btn btn-secondary" style="width:120px">
+				Скасувати
+			</a>
 		</div>
-		<div class="mb-3">
-			<label asp-for="ProductName"></label>
-			<input asp-for="ProductName" disabled class="form-control" />
-		</div>
-		<div class="mb-3">
-			<label asp-for="Cost"></label>
-			<input asp-for="Cost" disabled class="form-control" />
-		</div>
-		<div class="mb-3">
-			<label asp-for="NumLeft"></label>
-			<input asp-for="NumLeft" disabled class="form-control" />
-		</div>
-		<button type="submit" class="btn btn-primary" style="width:120px">Видалити</button>
-		<a asp-controller="Product" asp-action="Index" class="btn btn-secondary" style="width:120px">
-			Скасувати
-		</a>
-	</div>
-</form>
+	</form>
+</div>
+
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
+}

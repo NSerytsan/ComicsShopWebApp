@@ -1,13 +1,13 @@
 ﻿@inject SignInManager<User> signInManager;
 @model IEnumerable<Category>
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Категорії";
 }
 
 <div class="container p-3">
     <div calss="row p-4">
         <div class="col-6">
-            <h2 class="text-primary">Категорії</h2>
+            <h2 class="text-primary">@ViewData["Title"]</h2>
         </div>
         <div class="text-end">
             @if (signInManager.IsSignedIn(User))
@@ -18,7 +18,7 @@
             }
         </div>
     </div>
-</div> 
+</div>
 
 <table class="table table-borderless table-striped" style="width:100%">
     <thead>
@@ -33,7 +33,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach(var obj in Model)
+        @foreach (var obj in Model)
         {
             <tr>
                 <td width="50%">
@@ -46,15 +46,17 @@
                     @if (signInManager.IsSignedIn(User))
                     {
                         <div class="w-75 btn-group" role="group">
-                            <a asp-controller="Category" asp-action="Edit" asp-route-id="@obj.Id" class="btn btn-primary">Реадагувати</a>
+                            <a asp-controller="Category" asp-action="Edit" asp-route-id="@obj.Id"
+                        class="btn btn-primary">Реадагувати</a>
                         </div>
                     }
                 </td>
                 <td>
-                     @if (signInManager.IsSignedIn(User))
+                    @if (signInManager.IsSignedIn(User))
                     {
                         <div class="w-75 btn-group" role="group">
-                            <a asp-controller="Category" asp-action="Delete" asp-route-id="@obj.Id" class="btn btn-primary">Видалити</a>
+                            <a asp-controller="Category" asp-action="Delete" asp-route-id="@obj.Id"
+                        class="btn btn-primary">Видалити</a>
                         </div>
                     }
                 </td>
@@ -62,4 +64,3 @@
         }
     </tbody>
 </table>
-
