@@ -101,6 +101,28 @@ namespace ComicsShopWebApp.Controllers
             };
 
             return View(modelView);
-        } 
+        }
+
+        public async Task<IActionResult> EditProfile(EditProfileViewModel modelView)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await _userManager.GetUserAsync(this.User);
+                user.FullName = modelView.FullName;
+                user.DefaultDeliveryAddress = modelView.DefaultDeliveryAddress;
+                var result = await _userManager.UpdateAsync(user);
+
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index", "Product");
+                }
+
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
+                }
+            }
+            return View(modelView);
+        }
     }
 }
