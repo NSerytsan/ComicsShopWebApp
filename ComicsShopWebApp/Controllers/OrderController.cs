@@ -6,6 +6,7 @@ using ComicsShopWebApp.Models;
 
 namespace ComicsShopWebApp.Controllers
 {
+    [Authorize]
     public class OrderController : Controller
     {
         private readonly ComicsShopDBContext _db;
@@ -16,7 +17,6 @@ namespace ComicsShopWebApp.Controllers
             _userManager = userManager;
         }
 
-        [Authorize]
         public async Task<IActionResult> Index()
         {
             var user = await _userManager.GetUserAsync(this.User);
@@ -24,7 +24,6 @@ namespace ComicsShopWebApp.Controllers
             return View(orders);
         }
 
-        [Authorize]
         [HttpGet]
         public async Task<IActionResult> Create()
         {
@@ -43,7 +42,6 @@ namespace ComicsShopWebApp.Controllers
             return View(viewModel);
         }
 
-        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Create(OrderViewModel viewModel)
         {
