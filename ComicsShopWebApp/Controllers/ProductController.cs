@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace ComicsShopWebApp.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class ProductController : Controller
     {
         private readonly ComicsShopDBContext _db;
@@ -14,6 +15,8 @@ namespace ComicsShopWebApp.Controllers
         {
             _db = db;
         }
+
+        [AllowAnonymous]
         public IActionResult Index()
         {
             IEnumerable<Product> ProductsList = _db.Products;

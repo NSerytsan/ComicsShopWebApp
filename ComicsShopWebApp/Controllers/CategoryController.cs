@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ComicsShopWebApp.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class CategoryController : Controller
     {
         private readonly ComicsShopDBContext _db;
@@ -19,13 +20,11 @@ namespace ComicsShopWebApp.Controllers
             return View(categories);
         }
 
-        [Authorize]
         public IActionResult Create()
         {
             return View();
         }
 
-        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create(Category category)
@@ -39,7 +38,6 @@ namespace ComicsShopWebApp.Controllers
             return View(category);
         }
 
-        [Authorize]
         public IActionResult Edit(int id)
         {
             var category = _db.Categories.Find(id);
@@ -51,7 +49,6 @@ namespace ComicsShopWebApp.Controllers
             return View(category);
         }
 
-        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Edit(Category category)
@@ -65,7 +62,6 @@ namespace ComicsShopWebApp.Controllers
             return View(category);
         }
 
-        [Authorize]
         public IActionResult Delete(int id)
         {
             var category = _db.Categories.Find(id);
@@ -79,7 +75,6 @@ namespace ComicsShopWebApp.Controllers
             return View(category);
         }
 
-        [Authorize]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public IActionResult DeletePost(int id)
