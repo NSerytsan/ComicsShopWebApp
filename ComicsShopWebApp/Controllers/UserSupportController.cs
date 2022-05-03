@@ -55,5 +55,11 @@ namespace ComicsShopWebApp.Controllers
             }
             return View(model);
         }
+
+        public async Task<IActionResult> ShowAll()
+        {
+            IEnumerable<UserSupport> MesssagesList = _db.UserSupports;
+            return View(MesssagesList);
+        }
     }
 }

@@ -38,7 +38,7 @@
                                     @productItem.Quantity
                                 </td>
                                 <td width="50%">
-                                    @(productItem.Product.Cost * productItem.Quantity)
+                                    @((productItem.Product.Cost * productItem.Quantity).ToString("# ### ###.00"))
                                 </td>
                             </tr>
                         }
@@ -48,7 +48,7 @@
                                 <td></td>
                                 <td align="right">Разом:</td>
                                 <td>
-                                    @Model.Total
+                                    @Model.Total.ToString("# ### ###.00")
                                 </td>
                             </tr>
                         }

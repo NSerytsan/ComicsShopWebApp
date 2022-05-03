@@ -1,4 +1,5 @@
-﻿@model IEnumerable<Order>
+﻿@using System.Globalization;
+@model IEnumerable<Order>
 @{
     ViewData["Title"] = "Замовлення";
 }
@@ -16,7 +17,15 @@
     {
         <div class="card border-primary mb-3" style="max-width: 100%;">
             <div class="card-header">
-                <p class="card-text">@order.Id</p>
+                <div class="row">
+                    <div class="col">
+                        <p class="card-text">@order.Id</p>
+                    </div>
+                    <div class="col">
+                        <p class="card-text text-end">@order.OrderDate.ToString(new CultureInfo("uk-Ua").DateTimeFormat.ShortDatePattern)</p>
+                    </div>
+                </div>
+                
             </div>
             <div class="card-body">
                 <table class="table table-borderless table-striped" style="width:100%">
@@ -45,7 +54,7 @@
                                     @productItem.Quantity
                                 </td>
                                 <td width="50%">
-                                    @(productItem.Product.Cost * productItem.Quantity)
+                                    @((productItem.Product.Cost * productItem.Quantity).ToString("# ### ###.00"))
                                 </td>
                             </tr>
                         }
@@ -53,7 +62,7 @@
                             <td></td>
                             <td align="right">Разом:</td>
                             <td>
-                                @order.Cost
+                                @order.Cost.ToString("# ### ###.00")
                             </td>
                         </tr>
                     </tbody>
