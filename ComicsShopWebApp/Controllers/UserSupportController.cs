@@ -3,6 +3,7 @@ using ComicsShopWebApp.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace ComicsShopWebApp.Controllers
 {
@@ -18,11 +19,12 @@ namespace ComicsShopWebApp.Controllers
         }
 
         [Authorize]
-        public async Task<IActionResult> IndexAsync()
+        [HttpGet]
+        public async Task<IActionResult> Index()
         {
             var user = await _userManager.GetUserAsync(this.User);
 
-            IEnumerable<UserSupport> MesssagesList = _db.UserSupports.Where(b => b.UserId == user.Id);
+            var MesssagesList = _db.UserSupports.Include(us => us.User).Where(b => b.UserId == user.Id);
             return View(MesssagesList);
         }
 
@@ -30,7 +32,6 @@ namespace ComicsShopWebApp.Controllers
         [Authorize]
         public IActionResult Create()
         {
-
             return View();
         }
 
@@ -56,9 +57,10 @@ namespace ComicsShopWebApp.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = "Admin")]
         public IActionResult ShowAll()
         {
-            IEnumerable<UserSupport> MesssagesList = _db.UserSupports;
+            var MesssagesList = _db.UserSupports.Include(us => us.User);
             return View(MesssagesList);
         }
     }
