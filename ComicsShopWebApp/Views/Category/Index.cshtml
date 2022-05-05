@@ -9,14 +9,34 @@
         <div class="col-6">
             <h2 class="text-primary">@ViewData["Title"]</h2>
         </div>
-        <div class="text-end">
-            @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
-            {
-                <a asp-controller="Category" asp-action="Create" class="btn btn-primary">
-                    Створити нову категорію
-                </a>
-            }
-        </div>
+        @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+        {
+            <div class="row justify-content-end">
+                <div class="col-7 text-end">
+                    <div class="mb-3">
+                        <a asp-controller="Category" asp-action="Create" class="btn btn-primary">
+                            Створити нову категорію
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-end mb-3">
+                <div class="col-7">
+                    <form method="post" asp-action="Import">
+                        <div class="input-group">
+                            <label class="input-group-text">Оберіть exel-файл для заватаження</label>
+                            <input type="file" class="form-control">
+                            <button class="btn btn-primary" type="submit">Завантажити</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="row justify-content-end mb-3">
+                <div class="col-7 text-end">
+                    <a class="btn btn-primary" asp-action="Export">Завантажити інформацію в файл</a>
+                </div>
+            </div>
+        }
     </div>
 </div>
 

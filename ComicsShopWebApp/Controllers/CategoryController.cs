@@ -70,7 +70,7 @@ namespace ComicsShopWebApp.Controllers
             {
                 return NotFound();
             }
-            
+
             _db.Entry(category).Collection(p => p.Products).Load();
             return View(category);
         }
@@ -87,6 +87,16 @@ namespace ComicsShopWebApp.Controllers
 
             _db.Categories.Remove(category);
             _db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        public IActionResult Import()
+        {
+            return RedirectToAction("Index");
+        }
+
+        public IActionResult Export()
+        {
             return RedirectToAction("Index");
         }
     }
