@@ -11,7 +11,7 @@ namespace ComicsShopWebApp.Utilities
             _importer = importer;
         }
 
-        public void Export(FileStream stream, ComicsShopDBContext context)
+        public void Import(FileStream stream, ComicsShopDBContext context)
         {
             _importer.ImportCategories(stream, context);
         }

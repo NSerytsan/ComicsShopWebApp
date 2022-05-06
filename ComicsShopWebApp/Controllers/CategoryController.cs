@@ -94,6 +94,18 @@ namespace ComicsShopWebApp.Controllers
 
         public IActionResult Import(IFormFile file)
         {
+            if (ModelState.IsValid)
+            {
+                if (file != null)
+                {
+                    using (var stream = new FileStream(file.FileName, FileMode.Create))
+                    {
+                        file.CopyTo(stream);
+                        var service = new CategoriesImportService(new ExcelCategoriesImporter());
+                        service.Import(stream, _db);
+                    }
+                }
+            }
             return RedirectToAction("Index");
         }
 
