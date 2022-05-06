@@ -14,7 +14,7 @@ namespace ComicsShopWebApp.Utilities
 
         public FileContentResult Export(IEnumerable<Category> categories, string fileName)
         {
-            return _exporter.exportCategories(categories, fileName);
+            return _exporter.ExportCategories(categories, fileName);
         }
     }
 }

@@ -6,7 +6,7 @@ namespace ComicsShopWebApp.Utilities;
 
 public class ExcelCategoriesExporter : ICategoriesExporter
 {
-    public FileContentResult exportCategories(IEnumerable<Category> categories, string fileName)
+    public FileContentResult ExportCategories(IEnumerable<Category> categories, string fileName)
     {
         using (XLWorkbook workbook = new XLWorkbook(XLEventTracking.Disabled))
         {

@@ -92,7 +92,7 @@ namespace ComicsShopWebApp.Controllers
             return RedirectToAction("Index");
         }
 
-        public IActionResult Import()
+        public IActionResult Import(IFormFile file)
         {
             return RedirectToAction("Index");
         }

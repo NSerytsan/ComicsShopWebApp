@@ -5,6 +5,6 @@ namespace ComicsShopWebApp.Utilities
 {
     public interface ICategoriesExporter
     {
-        FileContentResult exportCategories(IEnumerable<Category> categories, string fileName);
+        FileContentResult ExportCategories(IEnumerable<Category> categories, string fileName);
     }
 }
