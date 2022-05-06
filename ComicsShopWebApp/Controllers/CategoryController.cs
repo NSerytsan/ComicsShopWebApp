@@ -1,7 +1,8 @@
 ﻿using ComicsShopWebApp.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using ClosedXML.Excel;
+using ComicsShopWebApp.Utilities;
+using Microsoft.EntityFrameworkCore;
 
 namespace ComicsShopWebApp.Controllers
 {
@@ -98,7 +99,8 @@ namespace ComicsShopWebApp.Controllers
 
         public IActionResult Export()
         {
-            return RedirectToAction("Index");
+            var exporter = new CategoriesExportService(new ExcelCategoriesExporter());
+            return exporter.Export(_db.Categories.Include(c => c.Products), $"comics_shop_{DateTime.UtcNow.ToShortDateString()}");
         }
     }
 }
