@@ -92,15 +92,15 @@ namespace ComicsShopWebApp.Controllers
             return RedirectToAction("Index");
         }
 
-        public IActionResult Import(IFormFile file)
+        public async Task<IActionResult> ImportAsync(IFormFile excelFile)
         {
             if (ModelState.IsValid)
             {
-                if (file != null)
+                if (excelFile != null)
                 {
-                    using (var stream = new FileStream(file.FileName, FileMode.Create))
+                    using (var stream = new FileStream(excelFile.FileName, FileMode.Create))
                     {
-                        file.CopyTo(stream);
+                        await excelFile.CopyToAsync(stream);
                         var service = new CategoriesImportService(new ExcelCategoriesImporter());
                         service.Import(stream, _db);
                     }
