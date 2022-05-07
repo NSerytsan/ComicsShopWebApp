@@ -1,11 +1,88 @@
-﻿@{
+﻿@inject SignInManager<User> signInManager;
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
+@if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+{
+    <div class="row">
+    <div class="col">
+        <div id="piechart_products_chart_div"></div>
+    </div>
+    <div class="col">
+        <div id="barchart_products_chart_div"></div>
+    </div>
+</div>
+    <div class="row">
+    <div class="col">
+        <div id="piechart_categories_chart_div"></div>
+    </div>
+    <div class="col">
+        <div id="barchart_categories_chart_div"></div>
+    </div>
+</div>
+}
+else
+{
+    <div class="text-center">
     <br />
     <br />
     <h4>Вітаю на головній сторінці!</h4>
     <br />
     <a asp-controller="Product" asp-action="Index" class="btn btn-primary">Перейти до продуктів</a>
 </div>
+}
+
+
+@section scripts
+{
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+    google.charts.load('current', { 'packages': ['corechart'] });
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+
+        $.get('/api/Chart/Products', function (jsonData) {
+            data = google.visualization.arrayToDataTable(jsonData, false);
+            var piechart_options = {
+                title: 'Кількіть товарів',
+                width: 500,
+                height: 400
+            };
+            var piechart = new google.visualization.PieChart(document.getElementById('piechart_products_chart_div'));
+            piechart.draw(data, piechart_options);
+
+            var barchart_options = {
+                title: 'Кількість товарів',
+                width: 500,
+                height: 400,
+                legend: 'none'
+            };
+            var barchart = new google.visualization.BarChart(document.getElementById('barchart_products_chart_div'));
+            barchart.draw(data, barchart_options);
+        })
+
+        $.get('/api/Chart/Categories', function (jsonData) {
+            data = google.visualization.arrayToDataTable(jsonData, false);
+
+            var piechart_options = {
+                title: 'Співвідношення кількості товарів та категорій',
+                width: 500,
+                height: 400
+            };
+            var piechart = new google.visualization.PieChart(document.getElementById('piechart_categories_chart_div'));
+            piechart.draw(data, piechart_options);
+
+            var barchart_options = {
+                title: 'Співвідношення кількості товарів та категорій',
+                width: 500,
+                height: 400,
+                legend: 'none'
+            };
+            var barchart = new google.visualization.BarChart(document.getElementById('barchart_categories_chart_div'));
+            barchart.draw(data, barchart_options);
+        })
+    }
+</script>
+}
