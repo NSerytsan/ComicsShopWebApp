@@ -10,9 +10,11 @@ namespace ComicsShopWebApp.Controllers
     public class CategoryController : Controller
     {
         private readonly ComicsShopDBContext _db;
+        private readonly ILogger<CategoryController> _logger;
 
-        public CategoryController(ComicsShopDBContext db)
+        public CategoryController(ILogger<CategoryController> logger, ComicsShopDBContext db)
         {
+            _logger = logger;
             _db = db;
         }
 
@@ -98,11 +100,20 @@ namespace ComicsShopWebApp.Controllers
             {
                 if (excelFile != null)
                 {
-                    using (var stream = new FileStream(excelFile.FileName, FileMode.Create))
+                    try
                     {
-                        await excelFile.CopyToAsync(stream);
-                        var service = new CategoriesImportService(new ExcelCategoriesImporter());
-                        service.Import(stream, _db);
+                        using (var stream = new FileStream(excelFile.FileName, FileMode.Create))
+                        {
+                            await excelFile.CopyToAsync(stream);
+                            var service = new CategoriesImportService(new ExcelCategoriesImporter());
+                            service.Import(stream, _db);
+                            _db.SaveChanges();
+                            stream.Close();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger.LogError(ex.Message);
                     }
                 }
             }
