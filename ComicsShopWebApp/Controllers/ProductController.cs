@@ -1,5 +1,6 @@
 ﻿using ComicsShopWebApp.Data;
 using ComicsShopWebApp.Models;
+using ComicsShopWebApp.Utilities;
 using ComicsShopWebApp.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -7,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace ComicsShopWebApp.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = Constants.AdminRole)]
     public class ProductController : Controller
     {
         private readonly ComicsShopDBContext _db;

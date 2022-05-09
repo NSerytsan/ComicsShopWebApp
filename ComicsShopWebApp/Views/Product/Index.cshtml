@@ -10,7 +10,7 @@
             <h2 class="text-primary">@ViewData["Title"]</h2>
         </div>
     </div>
-    @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+    @if (signInManager.IsSignedIn(User) && User.IsInRole(Constants.AdminRole))
     {
         <div class="row">
             <div class="text-end">
@@ -62,7 +62,7 @@
                             }
                         </td>
                         <td>
-                            @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                            @if (signInManager.IsSignedIn(User) && User.IsInRole(Constants.AdminRole))
                             {
                                 <div class="w-75 btn-group" role="group">
                                     <a asp-controller="Product" asp-action="Edit" asp-route-id="@obj.Id"
@@ -71,7 +71,7 @@
                             }
                         </td>
                         <td>
-                            @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                            @if (signInManager.IsSignedIn(User) && User.IsInRole(Constants.AdminRole))
                             {
                                 <div class="w-75 btn-group" role="group">
                                     <a asp-controller="Product" asp-action="Delete" asp-route-id="@obj.Id"

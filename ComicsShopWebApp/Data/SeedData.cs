@@ -16,17 +16,17 @@ public class SeedData
         using (var context = new ComicsShopDBContext(
             serviceProvider.GetRequiredService<DbContextOptions<ComicsShopDBContext>>()))
         {
-            var managerUid = await EnsureUser(serviceProvider, "customer@demo.com", password);
+            var managerUid = await EnsureUser(serviceProvider, "customer@demo.com", "Тестовий Клієнт", password);
             await EnsureRole(serviceProvider, managerUid, Constants.CustomerRole);
 
-            var adminUid = await EnsureUser(serviceProvider, "admin@demo.com", password);
+            var adminUid = await EnsureUser(serviceProvider, "admin@demo.com", "Адміністратор усіх Адміністраторів", password);
             await EnsureRole(serviceProvider, adminUid, Constants.AdminRole);
         }
     }
 
     private static async Task<string> EnsureUser(
         IServiceProvider serviceProvider,
-        string userName, string initPw)
+        string userName, string fullName, string initPw)
     {
         var userManager = serviceProvider.GetService<UserManager<User>>();
 
@@ -38,7 +38,7 @@ public class SeedData
             {
                 UserName = userName,
                 Email = userName,
-                EmailConfirmed = true
+                FullName = fullName
             };
 
             var result = await userManager.CreateAsync(user, initPw);

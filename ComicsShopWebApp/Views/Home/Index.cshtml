@@ -3,7 +3,7 @@
     ViewData["Title"] = "Home Page";
 }
 
-@if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+@if (signInManager.IsSignedIn(User) && User.IsInRole(Constants.AdminRole))
 {
     <div class="row">
     <div class="col">

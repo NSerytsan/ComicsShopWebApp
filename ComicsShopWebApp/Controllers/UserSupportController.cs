@@ -1,5 +1,6 @@
 ﻿using ComicsShopWebApp.Data;
 using ComicsShopWebApp.Models;
+using ComicsShopWebApp.Utilities;
 using ComicsShopWebApp.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -58,7 +59,7 @@ namespace ComicsShopWebApp.Controllers
             return View(model);
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = Constants.AdminRole)]
         public IActionResult ShowAll()
         {
             var MesssagesList = _db.UserSupports.Include(us => us.User);

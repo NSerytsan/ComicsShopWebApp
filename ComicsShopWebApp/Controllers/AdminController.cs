@@ -3,10 +3,11 @@ using Microsoft.AspNetCore.Identity;
 using ComicsShopWebApp.ViewModels;
 using ComicsShopWebApp.Models;
 using Microsoft.AspNetCore.Authorization;
+using ComicsShopWebApp.Utilities;
 
 namespace ComicsShopWebApp.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    
     public class AdminController : Controller
     {
         private readonly RoleManager<IdentityRole> _roleManager;

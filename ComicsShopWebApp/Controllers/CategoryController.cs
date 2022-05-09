@@ -7,7 +7,7 @@ using ComicsShopWebApp.Data;
 
 namespace ComicsShopWebApp.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = Constants.AdminRole)]
     public class CategoryController : Controller
     {
         private readonly ComicsShopDBContext _db;

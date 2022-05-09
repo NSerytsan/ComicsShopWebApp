@@ -1,12 +1,12 @@
 using ComicsShopWebApp.Data;
-using ComicsShopWebApp.Models;
+using ComicsShopWebApp.Utilities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace ComicsShopWebApp.Controllers;
 
-[Authorize(Roles = "Admin")]
+[Authorize(Roles = Constants.AdminRole)]
 [Route("api/[controller]")]
 [ApiController]
 public class ChartController : ControllerBase
