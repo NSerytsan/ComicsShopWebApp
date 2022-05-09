@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ComicsShopWebApp.Utilities;
 using Microsoft.EntityFrameworkCore;
+using ComicsShopWebApp.Data;
 
 namespace ComicsShopWebApp.Controllers
 {

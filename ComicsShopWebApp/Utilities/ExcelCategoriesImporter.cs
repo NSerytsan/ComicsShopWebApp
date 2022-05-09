@@ -1,5 +1,5 @@
 using ClosedXML.Excel;
-using ComicsShopWebApp.Models;
+using ComicsShopWebApp.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace ComicsShopWebApp.Utilities;

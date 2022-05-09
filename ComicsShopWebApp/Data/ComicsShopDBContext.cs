@@ -1,7 +1,8 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using ComicsShopWebApp.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace ComicsShopWebApp.Models
+namespace ComicsShopWebApp.Data
 {
     public class ComicsShopDBContext : IdentityDbContext<User>
     {

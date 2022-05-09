@@ -1,4 +1,4 @@
-using ComicsShopWebApp.Models;
+using ComicsShopWebApp.Data;
 
 namespace ComicsShopWebApp.Utilities;
 

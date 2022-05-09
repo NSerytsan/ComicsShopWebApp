@@ -1,4 +1,5 @@
-﻿using ComicsShopWebApp.Models;
+﻿using ComicsShopWebApp.Data;
+using ComicsShopWebApp.Models;
 using ComicsShopWebApp.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
